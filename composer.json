@@ -1,0 +1,28 @@
+{
+    "name": "gearsdigital/kirby-reporter",
+    "description": "Report issues with ease.",
+    "type": "kirby-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Steffen Giers",
+            "email": "steffen.giers@gmail.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+          "KirbyReporter.php"
+        ],
+        "psr-4": {
+            "Gearsdigital\\KirbyReporter\\": "lib/"
+        }
+    },
+    "require": {
+        "getkirby/composer-installer": "^1.1",
+        "ql/uri-template": "^1.1",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}
