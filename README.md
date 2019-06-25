@@ -4,6 +4,8 @@ Report issues to your desired issue tracker with ease – directly from the pane
 
 It is planned to add *Bitbucket*, *Gitea* and *Trello* soon.
 
+![screenshot](https://user-images.githubusercontent.com/965069/60097385-95a1cf00-9753-11e9-8650-34a9b4d0b7c0.png)
+
 ## Installation
 
 After you've installed and configured this plugin correctly, open the panel menu and click the newly avaible "*⚡ New Issue*"-Link.
