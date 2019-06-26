@@ -17,7 +17,7 @@ trait ArrayTransformator
      * External APIs may expect data which differs from provided data. This method will replace
      * all keys in given $input array by using $hashMap as reference.
      *
-     * @param  array  $input
+     * @param  array  $input  Datasource on which the map is applied
      * @param  array  $hashMap
      *
      * @return  array
@@ -52,8 +52,10 @@ trait ArrayTransformator
     private function replaceKey(array $input, string $key, string $value): array
     {
         $needle = array_search($input[$key], $input);
-        $input[$value] = $input[$needle];
-        unset($input[$key]);
+        if ($needle != $value) {
+            $input[$value] = $input[$needle];
+            unset($input[$key]);
+        }
 
         return $input;
     }
