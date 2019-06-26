@@ -1,66 +1,30 @@
 <?php
 
-namespace Gearsdigital\KirbyReporter;
+namespace KirbyReporter\Client;
+
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * Class Response
+ * Represents a response object.
  *
- * @package Gearsdigital\KirbyReporter
+ * @package KirbyReporter\Client
+ * @author Steffen Giers <steffen.giers@gmail.com>
  */
 class Response
 {
+    /**
+     * @var int
+     */
     public $status;
-    public $platform;
-    public $repo;
-    public $owner;
-    public $issueUrl;
-    public $issueId;
 
     /**
-     * @param  string  $status
+     * @var array
      */
-    public function setStatus($status): void
-    {
-        $this->status = $status;
-    }
+    public $body;
 
-    /**
-     * @param  string  $platform
-     */
-    public function setPlatform($platform): void
+    public function __construct(ResponseInterface $response)
     {
-        $this->platform = $platform;
-    }
-
-    /**
-     * @param  string  $repo
-     */
-    public function setRepo($repo): void
-    {
-        $this->repo = $repo;
-    }
-
-    /**
-     * @param  string  $owner
-     */
-    public function setOwner($owner): void
-    {
-        $this->owner = $owner;
-    }
-
-    /**
-     * @param  string  $issueUrl
-     */
-    public function setIssueUrl($issueUrl): void
-    {
-        $this->issueUrl = $issueUrl;
-    }
-
-    /**
-     * @param  string  $issueId
-     */
-    public function setIssueId($issueId, $prefix = '#'): void
-    {
-        $this->issueId = $prefix . $issueId;
+        $this->status = $response->getStatusCode();
+        $this->body = json_decode($response->getBody()->getContents(), true);
     }
 }
