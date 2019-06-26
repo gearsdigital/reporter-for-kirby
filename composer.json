@@ -11,16 +11,17 @@
     ],
     "autoload": {
         "files": [
-          "KirbyReporter.php"
+            "KirbyReporter.php"
         ],
         "psr-4": {
-            "Gearsdigital\\KirbyReporter\\": "lib/"
+            "KirbyReporter\\": "lib/"
         }
     },
     "require": {
-        "getkirby/composer-installer": "^1.1",
         "ql/uri-template": "^1.1",
-        "guzzlehttp/guzzle": "~6.0"
+        "guzzlehttp/guzzle": "~6.0",
+        "league/fractal": "^0.18.0",
+        "ext-json": "*"
     },
     "config": {
         "optimize-autoloader": true
