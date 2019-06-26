@@ -19,9 +19,16 @@ class Github extends Client
 
     public function createIssue(array $requestBody)
     {
+        $mapper = new RequestDataMapper(
+            $requestBody,
+            [
+                'title'       => 'title',
+                'description' => 'body',
+            ]
+        );
         $response = $this->post(
             $this->getIssueUrl(),
-            $requestBody,
+            $mapper->getMappedData(),
             [
                 "Authorization" => "token ".$this->getAccessToken(),
             ]
@@ -33,6 +40,6 @@ class Github extends Client
         $responseBody = new Response($response);
         $mapper = new ResponseMapper($responseMap, $responseBody);
 
-        return json_encode($mapper);
+        return $mapper;
     }
 }
