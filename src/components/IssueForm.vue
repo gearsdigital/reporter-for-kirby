@@ -1,16 +1,16 @@
 <template>
   <div class="k-kit-form">
-    <k-box v-if="errors.length" theme="negative" class="k-kit-form--note">
+    <k-box class="k-kit-form--note" theme="negative" v-if="errors.length">
       <k-icon type="alert"/>
       <p v-for="error in errors">{{ error }}</p>
     </k-box>
 
-    <k-box v-if="hasResponse" theme="positive" class="k-kit-form--note">
+    <k-box class="k-kit-form--note" theme="positive" v-if="hasResponse">
       <k-icon type="check"/>
       <p v-html="successMessage"/>
     </k-box>
 
-    <k-form v-model="issue" @submit.prevent="checkForm" :fields="{
+    <k-form :fields="{
       title: {
         label: $t('reporter.form.field.title'),
         minlength: 3,
@@ -29,8 +29,8 @@
       line: {
         type: 'line'
       }
-    }"/>
-    <k-button :icon="buttonIcon" :class="{ 'is-loading': loading }" :disabled="loading" @click="checkForm">{{$t('reporter.form.button.save')}}</k-button>
+    }" @submit.prevent="checkForm" v-model="issue"/>
+    <k-button :class="{ 'is-loading': loading }" :disabled="loading" :icon="buttonIcon" @click="checkForm">{{$t('reporter.form.button.save')}}</k-button>
   </div>
 </template>
 
@@ -95,6 +95,9 @@
             this.response = {};
           } else if (response.status === 404) {
             this.errors.push(this.$t('reporter.form.error.repoNotFound'));
+            this.response = {};
+          } else if (response.status === 501) {
+            this.errors.push(this.$t('reporter.form.error.platform.unsupported'));
             this.response = {};
           } else {
             this.response = {};
