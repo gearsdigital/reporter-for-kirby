@@ -23,7 +23,6 @@
         "optimize-autoloader": true
     },
     "require-dev": {
-        "phpunit/phpunit": "^8",
-        "getkirby/kirby": "*"
+        "phpunit/phpunit": "^8"
     }
 }
