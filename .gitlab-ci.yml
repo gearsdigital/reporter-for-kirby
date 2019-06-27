@@ -1,5 +1,28 @@
 image: thecodingmachine/php:7.2-v1-apache
 
-test:
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  cache:
+    paths:
+      - vendor
   script:
-    - echo "run tests..."
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php composer-setup.php
+    - php -r "unlink('composer-setup.php');"
+    - php composer.phar install
+
+test:
+  stage: test
+  cache:
+    paths:
+      - vendor
+  script:
+    - ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests
+
