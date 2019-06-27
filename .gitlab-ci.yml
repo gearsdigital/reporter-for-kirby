@@ -1,0 +1,5 @@
+image: thecodingmachine/php:7.2-v1-apache
+
+test:
+  script:
+    - echo "run tests..."
