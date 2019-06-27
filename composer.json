@@ -10,9 +10,6 @@
         }
     ],
     "autoload": {
-        "files": [
-            "KirbyReporter.php"
-        ],
         "psr-4": {
             "KirbyReporter\\": "lib/"
         }
@@ -20,10 +17,13 @@
     "require": {
         "ql/uri-template": "^1.1",
         "guzzlehttp/guzzle": "~6.0",
-        "league/fractal": "^0.18.0",
         "ext-json": "*"
     },
     "config": {
         "optimize-autoloader": true
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8",
+        "getkirby/kirby": "*"
     }
 }
