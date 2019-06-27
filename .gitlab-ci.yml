@@ -1,22 +1,11 @@
 image: thecodingmachine/php:7.2-v1-apache
 
 stages:
-  - build
   - test
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
 
-build:
-  stage: build
-  cache:
-    paths:
-      - vendor
-  script:
-    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-    - php composer-setup.php
-    - php -r "unlink('composer-setup.php');"
-    - php composer.phar install
 
 test:
   stage: test
