@@ -18,7 +18,7 @@ trait ArrayTransformator
      * all keys in given $input array by using $hashMap as reference.
      *
      * @param  array  $input  Datasource on which the map is applied
-     * @param  array  $hashMap
+     * @param  array  $hashMap Key-Value store of key to be replaced
      *
      * @return  array
      * @example
@@ -28,7 +28,7 @@ trait ArrayTransformator
      *
      * -> ['name' => 'Hello World!']
      */
-    private function transform(array $input, array $hashMap): array
+    public function transform(array $input, array $hashMap): array
     {
         if (empty($hashMap)) {
             return $input;
