@@ -7,4 +7,3 @@
 # Composer files
 /vendor
 /.cache/
-phpunit
