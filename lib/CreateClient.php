@@ -21,6 +21,9 @@ class CreateClient
             case 'gitlab':
                 $this->api = new Gitlab($vendor, $token);
                 break;
+            case 'bitbucket':
+                $this->api = new BitbucketCloud($vendor, $token);
+                break;
         }
     }
 }
