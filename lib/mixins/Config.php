@@ -19,5 +19,6 @@ trait Config
         = [
             'github',
             'gitlab',
+            'bitbucket'
         ];
 }
