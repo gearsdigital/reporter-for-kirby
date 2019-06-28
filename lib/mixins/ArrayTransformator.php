@@ -14,11 +14,11 @@ trait ArrayTransformator
     /**
      * Transform array keys based on key map.
      *
-     * External APIs may expect data which differs from provided data. This method will replace
-     * all keys in given $input array by using $hashMap as reference.
+     * This method will replace all array keys in given $input by using $hashMap as reference.
+     * If the $input value is an array it will check for an "dot path" and create a nested array structure.
      *
      * @param  array  $input  Datasource on which the map is applied
-     * @param  array  $hashMap Key-Value store of key to be replaced
+     * @param  array  $hashMap  Key-Value store of key to be replaced
      *
      * @return  array
      * @example
@@ -30,33 +30,55 @@ trait ArrayTransformator
      */
     public function transform(array $input, array $hashMap): array
     {
-        if (empty($hashMap)) {
+        if (empty($hashMap) || empty($input)) {
             return $input;
         }
         foreach ($hashMap as $key => $value) {
-            $input = $this->replaceKey($input, $key, $value);
+            if ($key != $value) {
+                if (is_array($value)) {
+                    $this->replaceByPath($input, $value[0], $input[$key]);
+                } else {
+                    $this->replace($input, $key, $value);
+                }
+                unset($input[$key]);
+            }
         }
 
         return $input;
     }
 
     /**
-     * Replace array key
+     * Replace key in array
      *
-     * @param  array  $input
-     * @param  string  $key
+     * @param  array  $haystack
+     * @param  string  $needle
      * @param  string  $value
      *
      * @return array
      */
-    private function replaceKey(array $input, string $key, string $value): array
+    private function replace(array &$haystack, string $needle, $value): array
     {
-        $needle = array_search($input[$key], $input);
         if ($needle != $value) {
-            $input[$value] = $input[$needle];
-            unset($input[$key]);
+            $haystack[$value] = $haystack[$needle];
         }
 
-        return $input;
+        return $haystack;
+    }
+
+    /**
+     * Replace by path
+     *
+     * @param $arr
+     * @param $path
+     * @param $value
+     * @param  string  $separator
+     */
+    private function replaceByPath(&$arr, $path, $value, $separator = '.')
+    {
+        $keys = explode($separator, $path);
+        foreach ($keys as $key) {
+            $arr = &$arr[$key];
+        }
+        $arr = $value;
     }
 }

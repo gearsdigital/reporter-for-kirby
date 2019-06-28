@@ -35,10 +35,31 @@ final class ArrayTransformatorTest extends TestCase
     public function arrayProvider()
     {
         return [
-            [[], [], []],
-            [['lastname'], ['lastname'], []],
-            [['lastname' => 'peter'], ['lastname' => 'peter'], []],
-            [['name' => 'peter'], ['lastname' => 'peter'], ['lastname' => 'name']],
+            'empty-arrays'               => [
+                [], // $expected
+                [], // $input
+                [], // $map
+            ],
+            [
+                ['lastname'],
+                ['lastname'],
+                [],
+            ],
+            [
+                ['lastname' => 'peter'],
+                ['lastname' => 'peter'],
+                [],
+            ],
+            [
+                ['name' => 'peter'],
+                ['lastname' => 'peter'],
+                ['lastname' => 'name'],
+            ],
+            'map-same-key'               => [
+                ['lastname' => 'peter'],
+                ['lastname' => 'peter'],
+                ['lastname' => 'lastname'],
+            ],
             [
                 ['name' => 'peter', 'street' => 'downing street 10'],
                 ['lastname' => 'peter', 'street' => 'downing street 10'],
@@ -48,6 +69,21 @@ final class ArrayTransformatorTest extends TestCase
                 ['name' => 'peter', 'road' => 'downing street 10'],
                 ['lastname' => 'peter', 'street' => 'downing street 10'],
                 ['lastname' => 'name', 'street' => 'road'],
+            ],
+            "map-properties"             => [
+                ['name' => 'peter', 'content' => 'downing street 10'],
+                ['title' => 'peter', 'description' => 'downing street 10'],
+                ['title' => 'name', 'description' => ['content']],
+            ],
+            "nested-map-properties"      => [
+                ['name' => 'peter', 'content' => ['raw' => 'downing street 10']],
+                ['title' => 'peter', 'description' => 'downing street 10'],
+                ['title' => 'name', 'description' => ['content.raw']],
+            ],
+            "deep-nested-map-properties" => [
+                ['name' => 'peter', 'content' => ['raw' => ['really' => ['deep' => 'downing street 10']]]],
+                ['title' => 'peter', 'description' => 'downing street 10'],
+                ['title' => 'name', 'description' => ['content.raw.really.deep']],
             ],
         ];
     }
