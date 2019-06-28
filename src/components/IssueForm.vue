@@ -93,10 +93,15 @@
           } else if (response.status === 401) {
             this.errors.push(this.$t('reporter.form.error.authFailed'));
             this.response = {};
+          } else if (response.status === 400) {
+            this.errors.push(response.message);
+            this.response = {};
           } else if (response.status === 404) {
             this.errors.push(this.$t('reporter.form.error.repoNotFound'));
             this.response = {};
-          } else if (response.status === 501) {
+          }
+          // 501 is defined by this appplication -> CreateVendor.php:70
+          else if (response.status === 501) {
             this.errors.push(this.$t('reporter.form.error.platform.unsupported'));
             this.response = {};
           } else {
