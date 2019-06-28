@@ -51,16 +51,19 @@ class ResponseMapper
     /**
      * ResponseMapper constructor.
      *
+     * @param  Response  $response
+     *
      * @param  array  $map
-     * @param  array  $response
      *
      * @throws Exception
      */
-    public function __construct(array $map, Response $response)
+    public function __construct(Response $response, array $map)
     {
         $this->map = $map;
         $this->response = $response->body;
-        $this->populateProperties();
+        if (!empty($this->map)) {
+            $this->populateProperties();
+        }
         $this->validateProperties();
         // This needs to happen after all transformations are done because
         // the status is always populated
@@ -128,6 +131,16 @@ class ResponseMapper
         $reflectionClass = new ReflectionObject($this);
 
         return $reflectionClass->getProperties(ReflectionProperty::IS_PUBLIC);
+    }
+
+    public function setIssueId($id)
+    {
+        $this->issueId = $id;
+    }
+
+    public function setissueUrl($url)
+    {
+        $this->issueUrl = $url;
     }
 
 }

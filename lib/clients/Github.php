@@ -38,7 +38,7 @@ class Github extends Client
             'html_url' => 'issueUrl',
         ];
         $responseBody = new Response($response);
-        $mapper = new ResponseMapper($responseMap, $responseBody);
+        $mapper = new ResponseMapper($responseBody, $responseMap);
 
         return $mapper;
     }

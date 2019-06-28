@@ -31,7 +31,7 @@ class Gitlab extends Client
             'web_url' => 'issueUrl',
         ];
         $responseBody = new Response($response);
-        $mapper = new ResponseMapper($responseMap, $responseBody);
+        $mapper = new ResponseMapper($responseBody, $responseMap);
 
         return $mapper;
     }
