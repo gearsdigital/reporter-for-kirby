@@ -1,0 +1,6 @@
+watch:
+  directories:
+    - lib
+    - tests
+  fileMask: '*.php'
+hideManual: true
