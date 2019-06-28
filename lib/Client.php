@@ -86,4 +86,14 @@ class Client
     {
         return $this->accessToken;
     }
+
+    /**
+     * Return detected user.
+     *
+     * @return string|null
+     */
+    protected function getUser()
+    {
+        return $this->vendor->owner;
+    }
 }
