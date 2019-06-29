@@ -4,11 +4,13 @@
 Report issues to your desired issue tracker with ease – directly from the panel!
 
 ## Supported platforms
-- [x] [Gitlab](https://gitlab.com)
-- [x] [Github](https://github.com)
-- [x] [Bitbucket Cloud](https://bitbucket.org)
-- [ ] [Trello](https://trello.com)
-- [ ] [Gitea](https://gitea.io)
+- [Gitlab](https://gitlab.com)
+- [Github](https://github.com)
+- [Bitbucket Cloud](https://bitbucket.org)
+
+**Coming soon**
+- [Trello](https://trello.com)
+- [Gitea](https://gitea.io)
 
 Please file an issue if you have specific requirements :)
 
