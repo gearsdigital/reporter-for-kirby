@@ -1,5 +1,7 @@
 
-# ⚡ Kirby Issue Reporter
+[![Maintainability](https://api.codeclimate.com/v1/badges/0158aee54310536475f8/maintainability)](https://codeclimate.com/github/gearsdigital/kirby-reporter/maintainability)
+
+# Kirby Issue Reporter
 
 Report issues to your desired issue tracker with ease – directly from the panel!
 
