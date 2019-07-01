@@ -1,5 +1,7 @@
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/0158aee54310536475f8/maintainability)](https://codeclimate.com/github/gearsdigital/kirby-reporter/maintainability)
+[![Maintainability](https://img.shields.io/codeclimate/maintainability/gearsdigital/kirby-reporter.svg)](https://codeclimate.com/github/gearsdigital/kirby-reporter)
+[![Codefactor](https://img.shields.io/codefactor/grade/github/gearsdigital/kirby-reporter.svg)](https://www.codefactor.io/repository/github/gearsdigital/kirby-reporter)
+[![Kirby](https://img.shields.io/badge/kirby-3-brightgreen.svg)](https://getkirby.com/)
 
 # Kirby Issue Reporter
 
