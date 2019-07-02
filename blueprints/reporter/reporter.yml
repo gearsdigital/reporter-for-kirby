@@ -1,0 +1,7 @@
+reporter:
+  fields:
+    description:
+      label: Description
+      buttons: false
+      type: textarea
+      help: Please be as precise as possible.

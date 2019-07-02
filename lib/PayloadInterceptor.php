@@ -10,26 +10,28 @@ class PayloadInterceptor
     private $pluginName = 'gearsdigital/kirby-reporter';
     private $payload;
 
-    public function __construct($payload)
+    public function __construct(array $payload)
     {
         $this->payload = $payload;
     }
 
-    public function get()
+    public function get(): array
     {
         return [
-            'title'       => $this->payload['title'],
-            'description' => $this->renderIssueTemplate($this->payload['formFields']),
+            'title'       => (string)$this->payload['title'],
+            'description' => (string)$this->renderIssueTemplate($this->payload['formFields']),
         ];
     }
 
-    private function renderIssueTemplate($formFields)
+    private function renderIssueTemplate($formFields): string
     {
-        $template = Tpl::load($this->getTemplate(), ['form' => $formFields]);
-        return kirbytext($template);
+        return Tpl::load(
+            $this->getTemplate(),
+            ['fields' => $formFields]
+        );
     }
 
-    private function getTemplate()
+    private function getTemplate(): string
     {
         $templateRoot = kirby()->root('templates');
         $pluginRoot = kirby()->plugin($this->pluginName);

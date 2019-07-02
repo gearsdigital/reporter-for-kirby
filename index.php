@@ -17,7 +17,7 @@ Kirby::plugin(
     'gearsdigital/kirby-reporter',
     [
         'blueprints'   => [
-            'pages/reporter' => __DIR__.'/blueprints/pages/reporter.yml',
+            'reporter/reporter' => __DIR__.'/blueprints/reporter/reporter.yml',
         ],
         'templates'    => [
             'reporter' => __DIR__.'/templates/reporter.php',
@@ -47,7 +47,7 @@ Kirby::plugin(
                     'pattern' => 'reporter/fields',
                     'method'  => 'get',
                     'action'  => function () {
-                        $blueprint = Blueprint::load('pages/reporter');
+                        $blueprint = Blueprint::load('reporter/reporter');
 
                         return json_encode($blueprint['reporter']['fields']);
                     },

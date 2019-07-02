@@ -1,5 +1,3 @@
-## Steps to reproduce
-<?= $form['steps'] ?>
+## Issue Template
 
-## Browser
-<?= $form['browser'] ?>
+<?= $fields['description']; ?>
