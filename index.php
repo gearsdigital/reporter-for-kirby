@@ -1,29 +1,39 @@
 <?php
 require_once __DIR__.'/vendor/autoload.php';
 
+use Kirby\Cms\Blueprint;
 use KirbyReporter\Client\CreateClient;
 use KirbyReporter\Client\CreateVendor;
 use KirbyReporter\Client\ErrorResponse;
+use KirbyReporter\Client\PayloadInterceptor;
 
 $pluginState = option('kirby-reporter.disabled');
 if ($pluginState || is_null($pluginState)) {
     return false;
 }
+$url = option('kirby-reporter.repository');
+$token = option('kirby-reporter.token');
 Kirby::plugin(
     'gearsdigital/kirby-reporter',
     [
+        'blueprints'   => [
+            'reporter/reporter' => __DIR__.'/blueprints/reporter/reporter.yml',
+        ],
+        'templates'    => [
+            'reporter' => __DIR__.'/templates/reporter.php',
+        ],
         'api'          => [
             'routes' => [
                 [
-                    'pattern' => 'kirby-reporter',
+                    'pattern' => 'reporter/report',
                     'method'  => 'post',
-                    'action'  => function () {
-                        $url = option('kirby-reporter.repository');
-                        $token = option('kirby-reporter.token');
+                    'action'  => function () use ($url, $token) {
                         try {
+                            $requestBody = kirby()->api()->requestBody();
                             $vendor = new CreateVendor($url);
                             $client = new CreateClient($vendor, $token);
-                            $response = $client->api->createIssue(kirby()->api()->requestBody());
+                            $payload = new PayloadInterceptor($requestBody);
+                            $response = $client->api->createIssue($payload->get());
 
                             return json_encode($response);
                         } catch (Exception $e) {
@@ -31,6 +41,15 @@ Kirby::plugin(
 
                             return json_encode($errorResponse);
                         }
+                    },
+                ],
+                [
+                    'pattern' => 'reporter/fields',
+                    'method'  => 'get',
+                    'action'  => function () {
+                        $blueprint = Blueprint::load('reporter/reporter');
+
+                        return json_encode($blueprint['reporter']['fields']);
                     },
                 ],
             ],
@@ -44,8 +63,6 @@ Kirby::plugin(
                 'reporter.form.success'                    => 'Your problem has been reported successfully and is handled under case number: {issueLink}',
                 'reporter.form.issue.link'                 => '<a href="{issueLink}">#{issueId}</a>',
                 'reporter.form.button.save'                => 'Report Issue',
-                'reporter.form.field.description'          => 'Description',
-                'reporter.form.field.description.help'     => 'Please be as precise as possible :)',
                 'reporter.form.error.title'                => 'You need to add at least a title.',
                 'reporter.form.error.authFailed'           => 'Authentication failed. Please check your "Personal Access Token".',
                 'reporter.form.error.repoNotFound'         => 'Repository not found.',
@@ -61,8 +78,6 @@ Kirby::plugin(
                 'reporter.form.success'                    => 'Ihr Bericht wurde erfolgreich übertragen und wird unter der Fallnummer {issueLink} behandelt.',
                 'reporter.form.issue.link'                 => '<a href="{issueLink}">{issueId}</a>',
                 'reporter.form.button.save'                => 'Fehler melden',
-                'reporter.form.field.description'          => 'Beschreibung',
-                'reporter.form.field.description.help'     => 'Bitte beschreiben Sie den Fehler so genau wie möglich :)',
                 'reporter.form.error.title'                => 'Es muss mindestens ein Titel eingegeben werden.',
                 'reporter.form.error.authFailed'           => 'Anmeldung Fehlgeschlagen. Bitte prüfen Sie den "Personal Access Token".',
                 'reporter.form.error.repoNotFound'         => 'Das Repository wurde nicht gefunden.',
