@@ -2,7 +2,7 @@ title: Issue Template
 
 reporter:
   fields:
-    freetext:
+    steps:
       label: Steps to reproduce
       type: textarea
       help: Please be as precise as possible.

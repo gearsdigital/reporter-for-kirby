@@ -1,5 +1,5 @@
 ## Steps to reproduce
-<?= $form['description'] ?>
+<?= $form['steps'] ?>
 
 ## Browser
 <?= $form['browser'] ?>

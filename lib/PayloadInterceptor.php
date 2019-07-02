@@ -25,7 +25,8 @@ class PayloadInterceptor
 
     private function renderIssueTemplate($formFields)
     {
-        return Tpl::load($this->getTemplate(), ['form' => $formFields]);
+        $template = Tpl::load($this->getTemplate(), ['form' => $formFields]);
+        return kirbytext($template);
     }
 
     private function getTemplate()
