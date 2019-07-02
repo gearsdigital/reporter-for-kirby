@@ -8931,7 +8931,7 @@ var _default = {
       loading: false,
       issue: {
         title: null,
-        formFields: null
+        formFields: {}
       }
     };
   },
@@ -9072,7 +9072,8 @@ exports.default = _default;
                   _c("k-text-field", {
                     attrs: {
                       name: "title",
-                      label: _vm.$t("reporter.form.field.title")
+                      label: _vm.$t("reporter.form.field.title"),
+                      required: ""
                     },
                     model: {
                       value: _vm.issue.title,
@@ -9098,11 +9099,11 @@ exports.default = _default;
               }
             },
             model: {
-              value: _vm.formFields,
+              value: _vm.issue.formFields,
               callback: function($$v) {
-                _vm.formFields = $$v
+                _vm.$set(_vm.issue, "formFields", $$v)
               },
-              expression: "formFields"
+              expression: "issue.formFields"
             }
           }),
           _vm._v(" "),
@@ -9296,7 +9297,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51626" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53315" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

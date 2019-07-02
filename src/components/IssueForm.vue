@@ -13,11 +13,11 @@
     <k-form>
       <k-grid class="title-field">
         <k-column>
-          <k-text-field v-model="issue.title" name="title" :label="$t('reporter.form.field.title')"/>
+          <k-text-field v-model="issue.title" name="title" :label="$t('reporter.form.field.title')" required/>
         </k-column>
       </k-grid>
 
-      <k-fieldset :fields="fields" @submit.prevent="checkForm" v-model="formFields"/>
+      <k-fieldset :fields="fields" @submit.prevent="checkForm" v-model="issue.formFields"/>
 
       <k-line-field/>
 
@@ -40,7 +40,7 @@
         loading: false,
         issue: {
           title: null,
-          formFields: null,
+          formFields: {},
         }
       }
     },

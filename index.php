@@ -5,29 +5,35 @@ use Kirby\Cms\Blueprint;
 use KirbyReporter\Client\CreateClient;
 use KirbyReporter\Client\CreateVendor;
 use KirbyReporter\Client\ErrorResponse;
+use KirbyReporter\Client\PayloadInterceptor;
 
 $pluginState = option('kirby-reporter.disabled');
 if ($pluginState || is_null($pluginState)) {
     return false;
 }
+$url = option('kirby-reporter.repository');
+$token = option('kirby-reporter.token');
 Kirby::plugin(
     'gearsdigital/kirby-reporter',
     [
         'blueprints'   => [
-            'pages/issuetemplate' => __DIR__.'/blueprints/pages/issuetemplate.yml',
+            'pages/reporter' => __DIR__.'/blueprints/pages/reporter.yml',
+        ],
+        'templates'    => [
+            'reporter' => __DIR__.'/templates/reporter.php',
         ],
         'api'          => [
             'routes' => [
                 [
                     'pattern' => 'reporter/report',
                     'method'  => 'post',
-                    'action'  => function () {
-                        $url = option('kirby-reporter.repository');
-                        $token = option('kirby-reporter.token');
+                    'action'  => function () use ($url, $token) {
                         try {
+                            $requestBody = kirby()->api()->requestBody();
                             $vendor = new CreateVendor($url);
                             $client = new CreateClient($vendor, $token);
-                            $response = $client->api->createIssue(kirby()->api()->requestBody());
+                            $payload = new PayloadInterceptor($requestBody);
+                            $response = $client->api->createIssue($payload->get());
 
                             return json_encode($response);
                         } catch (Exception $e) {
@@ -41,7 +47,7 @@ Kirby::plugin(
                     'pattern' => 'reporter/fields',
                     'method'  => 'get',
                     'action'  => function () {
-                        $blueprint = Blueprint::load('pages/issuetemplate');
+                        $blueprint = Blueprint::load('pages/reporter');
 
                         return json_encode($blueprint['reporter']['fields']);
                     },

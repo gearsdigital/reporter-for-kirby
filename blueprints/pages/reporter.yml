@@ -1,10 +1,11 @@
-title: About us
+title: Issue Template
 
 reporter:
   fields:
     freetext:
-      label: Freetext
+      label: Steps to reproduce
       type: textarea
+      help: Please be as precise as possible.
     browser:
       label: Browser
       type: select
