@@ -73,13 +73,13 @@ class CreateVendor
 
     private function setUrl($url): void
     {
-        if (is_null($url)) {
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
             throw new Exception('reporter.form.error.optionNotFound.url');
         }
         $this->url = $url;
     }
 
-    private function extractProviderName(): string
+    private function extractProviderName()
     {
         $hostname = parse_url($this->url, PHP_URL_HOST);
         if (preg_match(
