@@ -2,7 +2,7 @@
   <k-view class="k-issue-tracker-view">
     <k-header>{{$t('reporter.headline')}}</k-header>
     <k-text>{{$t('reporter.description')}}</k-text>
-    <issue-form/>
+    <issue-form :fields="fields"/>
   </k-view>
 </template>
 
@@ -10,6 +10,19 @@
   import IssueForm from "./IssueForm";
 
   export default {
-    components: {IssueForm}
+    components: {IssueForm},
+    props: {
+      fields: Object
+    },
+    data() {
+      return {
+        fields: {}
+      }
+    },
+    async created() {
+      this.$api.get('reporter/fields').then((fields) => {
+        this.fields = fields;
+      });
+    },
   };
 </script>

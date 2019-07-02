@@ -1,0 +1,17 @@
+title: About us
+
+reporter:
+  fields:
+    freetext:
+      label: Freetext
+      type: textarea
+    browser:
+      label: Browser
+      type: select
+      options:
+        - value: firefox
+          text: Firefox
+        - value: Chrome
+          text: Chrome
+        - value: Safari
+          text: Safari

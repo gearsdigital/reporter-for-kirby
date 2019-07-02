@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__.'/vendor/autoload.php';
 
+use Kirby\Cms\Blueprint;
 use KirbyReporter\Client\CreateClient;
 use KirbyReporter\Client\CreateVendor;
 use KirbyReporter\Client\ErrorResponse;
@@ -12,10 +13,13 @@ if ($pluginState || is_null($pluginState)) {
 Kirby::plugin(
     'gearsdigital/kirby-reporter',
     [
+        'blueprints'   => [
+            'pages/issuetemplate' => __DIR__.'/blueprints/pages/issuetemplate.yml',
+        ],
         'api'          => [
             'routes' => [
                 [
-                    'pattern' => 'kirby-reporter',
+                    'pattern' => 'reporter/report',
                     'method'  => 'post',
                     'action'  => function () {
                         $url = option('kirby-reporter.repository');
@@ -33,6 +37,15 @@ Kirby::plugin(
                         }
                     },
                 ],
+                [
+                    'pattern' => 'reporter/fields',
+                    'method'  => 'get',
+                    'action'  => function () {
+                        $blueprint = Blueprint::load('pages/issuetemplate');
+
+                        return json_encode($blueprint['reporter']['fields']);
+                    },
+                ],
             ],
         ],
         'translations' => [
@@ -44,8 +57,6 @@ Kirby::plugin(
                 'reporter.form.success'                    => 'Your problem has been reported successfully and is handled under case number: {issueLink}',
                 'reporter.form.issue.link'                 => '<a href="{issueLink}">#{issueId}</a>',
                 'reporter.form.button.save'                => 'Report Issue',
-                'reporter.form.field.description'          => 'Description',
-                'reporter.form.field.description.help'     => 'Please be as precise as possible :)',
                 'reporter.form.error.title'                => 'You need to add at least a title.',
                 'reporter.form.error.authFailed'           => 'Authentication failed. Please check your "Personal Access Token".',
                 'reporter.form.error.repoNotFound'         => 'Repository not found.',
@@ -61,8 +72,6 @@ Kirby::plugin(
                 'reporter.form.success'                    => 'Ihr Bericht wurde erfolgreich übertragen und wird unter der Fallnummer {issueLink} behandelt.',
                 'reporter.form.issue.link'                 => '<a href="{issueLink}">{issueId}</a>',
                 'reporter.form.button.save'                => 'Fehler melden',
-                'reporter.form.field.description'          => 'Beschreibung',
-                'reporter.form.field.description.help'     => 'Bitte beschreiben Sie den Fehler so genau wie möglich :)',
                 'reporter.form.error.title'                => 'Es muss mindestens ein Titel eingegeben werden.',
                 'reporter.form.error.authFailed'           => 'Anmeldung Fehlgeschlagen. Bitte prüfen Sie den "Personal Access Token".',
                 'reporter.form.error.repoNotFound'         => 'Das Repository wurde nicht gefunden.',

@@ -10,33 +10,29 @@
       <p v-html="successMessage"/>
     </k-box>
 
-    <k-form :fields="{
-      title: {
-        label: $t('reporter.form.field.title'),
-        minlength: 3,
-        type: 'text',
-        required: true,
-        disabled: this.loading,
-      },
-      description: {
-        label: $t('reporter.form.field.description'),
-        help: $t('reporter.form.field.description.help'),
-        required: false,
-        disabled: this.loading,
-        type: 'textarea',
-        buttons: false
-      },
-      line: {
-        type: 'line'
-      }
-    }" @submit.prevent="checkForm" v-model="issue"/>
-    <k-button :class="{ 'is-loading': loading }" :disabled="loading" :icon="buttonIcon" @click="checkForm">{{$t('reporter.form.button.save')}}</k-button>
+    <k-form>
+      <k-grid class="title-field">
+        <k-column>
+          <k-text-field v-model="issue.title" name="title" :label="$t('reporter.form.field.title')"/>
+        </k-column>
+      </k-grid>
+
+      <k-fieldset :fields="fields" @submit.prevent="checkForm" v-model="formFields"/>
+
+      <k-line-field/>
+
+      <k-button :class="{ 'is-loading': loading }" :disabled="loading" :icon="buttonIcon" @click="checkForm">{{$t('reporter.form.button.save')}}</k-button>
+    </k-form>
+
   </div>
 </template>
 
 <script>
   export default {
     name: "IssueForm",
+    props: {
+      fields: Object
+    },
     data() {
       return {
         errors: [],
@@ -44,7 +40,7 @@
         loading: false,
         issue: {
           title: null,
-          description: null,
+          formFields: null,
         }
       }
     },
@@ -75,7 +71,6 @@
         if (!this.issue.title && this.issue.title < 3) {
           this.errors.push(this.$t('reporter.form.error.title'));
         }
-
         if (!this.errors.length) {
           this.submit();
         }
@@ -83,7 +78,7 @@
       submit() {
         this.loading = true;
 
-        const request = this.$api.post('kirby-reporter', this.issue);
+        const request = this.$api.post('reporter/report', this.issue);
 
         request.then(response => {
           if (response.status >= 200 && response.status < 300) {
@@ -128,11 +123,20 @@
     }
   }
 
+  .k-line-field {
+    margin: 2rem 0 1rem;
+  }
+
   .k-kit-form {
     padding: 2rem;
     margin-top: 2rem;
+    margin-bottom: 2rem;
     border: 1px solid rgba(0, 0, 0, .1);
     background: #fafafa;
+
+    .title-field {
+      margin-bottom: 2.25rem;
+    }
 
     .k-input[data-theme=field][data-invalid] {
       border: 1px solid #ccc;
