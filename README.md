@@ -50,6 +50,72 @@ composer require gearsdigital/kirby-reporter
 
 ## Configuration
 
+### Customizing the Form
+
+Create a file named `reporter.yml` and save it to `/site/blueprints/reporter/reporter.yml`
+
+The custom blueprint will override the default blueprint excluding the `title` which is, apart from translations, _not_ configurable. It is fully customizable by using [blueprint fields](https://getkirby.com/docs/guide/blueprints/fields).
+
+Location: `/site/blueprints/reporter/reporter.yml`
+
+```yml
+reporter:
+  fields:
+    steps:
+      label: Steps to reproduce
+      type: textarea
+      help: Please be as precise as possible.
+    type:
+      label: Issue Type
+      type: select
+      options:
+        - value: bug
+          text: Bug
+        - value: feature
+          text: Feature
+        - value: enhancement
+          text: Enhancement
+``` 
+> It is currently not (and will probably never be) possible to map custom fields to specifc fields of your issue tracker!
+
+#### Default Blueprint
+
+Location: `/site/plugins/kirby-reporter/blueprints/reporter/reporter.yml`
+
+```yml
+reporter:
+  fields:
+    description:
+      label: Description
+      type: textarea
+      help: Please be as precise as possible.
+```
+
+### Customizing the Issue Template
+
+Create a file named `reporter.php` and save it to `/site/templates/reporter.php`.
+
+Within the template you have access to an array which contains all submitted fields. Each field consists the `key` and the selected `value`.
+
+```php
+/** @var array $fields */
+$fields;
+```
+
+You can and do whatever you want to customize the output using `php`. However, the generated output is always treated as plain text and used as content of the `description` field of your issue tracker.
+
+>It might make sense to render **markdown** or anything else your issue tracker can deal with.
+
+#### Default Template
+
+Location: `/site/plugins/kirby-reporter/templates/reporter.php`
+
+```php
+## Issue Template
+
+<?= $fields['description']; ?>
+```
+
 ### Personal Access Token
 
 Personal access tokens are substitute passwords for your account to avoid putting your real password into configuration files. It depends on your platform how to obtain a *personal access token* (or *app password*).
