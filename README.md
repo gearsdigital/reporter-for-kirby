@@ -1,26 +1,23 @@
-
+# Kirby Issue Reporter
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/gearsdigital/kirby-reporter.svg)](https://codeclimate.com/github/gearsdigital/kirby-reporter)
 [![Codefactor](https://img.shields.io/codefactor/grade/github/gearsdigital/kirby-reporter.svg)](https://www.codefactor.io/repository/github/gearsdigital/kirby-reporter)
 [![Kirby](https://img.shields.io/badge/kirby-3-brightgreen.svg)](https://getkirby.com/)
 
-# Kirby Issue Reporter
+## TL;DR
 
-Report issues to your desired issue tracker with ease – directly from the panel!
+This Kirby 3 Plugin helps to report bugs, task or features to your desired issue tracker with ease – directly from the panel!
 
 ## Supported platforms
+
 - [Gitlab](https://gitlab.com)
 - [Github](https://github.com)
 - [Bitbucket Cloud](https://bitbucket.org)
-
-**Coming soon**
-- [Trello](https://trello.com)
-- [Gitea](https://gitea.io)
-
-Please file an issue if you have specific requirements :)
+- 
+> Please open an issue if you miss something here :)
 
 ## Screenshot
 
-![screenshot](https://user-images.githubusercontent.com/965069/60097385-95a1cf00-9753-11e9-8650-34a9b4d0b7c0.png)
+![screenshot](https://user-images.githubusercontent.com/965069/60670911-19556d00-9e72-11e9-954f-793e2b3ee9dd.png)
 
 ## Installation
 
@@ -41,6 +38,7 @@ git submodule add https://github.com/gearsdigital/kirby-reporter.git site/plugin
 ```
 composer require gearsdigital/kirby-reporter
 ```
+
 ## Options
 | Option | Description |
 | --- | --- |
@@ -103,6 +101,9 @@ $fields;
 ```
 
 You can and do whatever you want to customize the output using `php`. However, the generated output is always treated as plain text and used as content of the `description` field of your issue tracker.
+
+#### Preview
+You can use the preview tab to verify if your issue template is formatted properly.
 
 >It might make sense to render **markdown** or anything else your issue tracker can deal with.
 

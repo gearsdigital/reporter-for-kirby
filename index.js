@@ -117,74 +117,118 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
+})({"../node_modules/vue-slim-tabs/dist/vue-slim-tabs.common.js":[function(require,module,exports) {
+/*!
+ * vue-slim-tabs v0.3.0
+ * (c) 2017-present egoist <0x142857@gmail.com>
+ * Released under the MIT License.
+ */
+'use strict';
 
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
+Object.defineProperty(exports, '__esModule', { value: true });
 
-  return bundleURL;
-}
-
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-
-    if (matches) {
-      return getBaseURL(matches[0]);
+var Tabs = {
+  name: 'tabs',
+  props: {
+    defaultIndex: {
+      default: 0,
+      type: Number
+    },
+    onSelect: {
+      type: Function
     }
-  }
+  },
+  data: function data() {
+    return {
+      selectedIndex: this.defaultIndex
+    };
+  },
 
-  return '/';
-}
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
+  methods: {
+    switchTab: function switchTab(e, index, isDisabled) {
+      if (!isDisabled) {
+        this.selectedIndex = index;
+        this.onSelect && this.onSelect(e, index);
       }
     }
+  },
+  render: function render() {
+    var _this = this;
 
-    cssTimeout = null;
-  }, 50);
+    var h = arguments[0];
+
+    var tabs = this.$slots.default.filter(function (component) {
+      return component.componentOptions;
+    });
+
+    var tabList = [];
+    tabs.forEach(function (child, index) {
+      var _child$componentOptio = child.componentOptions.propsData,
+          title = _child$componentOptio.title,
+          titleSlot = _child$componentOptio.titleSlot,
+          disabled = _child$componentOptio.disabled;
+
+      var content = titleSlot ? _this.$slots[titleSlot] : title;
+      var isDisabled = disabled === true || disabled === '';
+
+      tabList.push(h(
+        'li',
+        {
+          'class': 'vue-tab',
+          attrs: { role: 'tab',
+
+            'aria-selected': _this.selectedIndex === index ? 'true' : 'false',
+            'aria-disabled': isDisabled ? 'true' : 'false'
+          },
+          on: {
+            'click': function click(e) {
+              return _this.switchTab(e, index, isDisabled);
+            }
+          }
+        },
+        [content]
+      ));
+    });
+
+    return h(
+      'div',
+      { 'class': 'vue-tabs', attrs: { role: 'tabs' }
+      },
+      [h(
+        'ul',
+        { 'class': 'vue-tablist', attrs: { role: 'tablist' }
+        },
+        [this.$slots.left, tabList, this.$slots.right]
+      ), tabs[this.selectedIndex]]
+    );
+  }
+};
+
+var Tab = {
+  name: 'tab',
+  props: ['title', 'titleSlot', 'disabled'],
+  render: function render() {
+    var h = arguments[0];
+
+    return h(
+      'div',
+      { 'class': 'vue-tabpanel', attrs: { role: 'tabpanel' }
+      },
+      [this.$slots.default]
+    );
+  }
+};
+
+function install(Vue) {
+  Vue.component(Tabs.name, Tabs);
+  Vue.component(Tab.name, Tab);
 }
 
-module.exports = reloadCSS;
-},{"./bundle-url":"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"../node_modules/vue-hot-reload-api/dist/index.js":[function(require,module,exports) {
+exports.Tabs = Tabs;
+exports.Tab = Tab;
+exports.install = install;
+
+},{}],"../node_modules/vue-hot-reload-api/dist/index.js":[function(require,module,exports) {
 var Vue // late bind
 var version
 var map = Object.create(null)
@@ -8882,13 +8926,166 @@ if (inBrowser) {
 
 var _default = Vue;
 exports.default = _default;
-},{}],"components/IssueForm.vue":[function(require,module,exports) {
+},{}],"components/IssuePreview.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+//
+//
+//
+//
+//
+var _default = {
+  name: "IssuePreview",
+  props: {
+    data: String
+  }
+};
+exports.default = _default;
+        var $488f4a = exports.default || module.exports;
+      
+      if (typeof $488f4a === 'function') {
+        $488f4a = $488f4a.options;
+      }
+    
+        /* template */
+        Object.assign($488f4a, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.data
+    ? _c("k-textarea-field", {
+        attrs: {
+          label: "Preview",
+          value: _vm.data,
+          buttons: false,
+          disabled: "true"
+        }
+      })
+    : _c("k-text", { attrs: { size: "small" } }, [
+        _vm._v(_vm._s(_vm.$t("reporter.tab.preview.empty")))
+      ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$488f4a', $488f4a);
+          } else {
+            api.reload('$488f4a', $488f4a);
+          }
+        }
+
+        
+      }
+    })();
+},{"vue-hot-reload-api":"../node_modules/vue-hot-reload-api/dist/index.js","vue":"../node_modules/vue/dist/vue.runtime.esm.js"}],"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"components/IssueForm.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _vueSlimTabs = require("vue-slim-tabs");
+
+var _IssuePreview = _interopRequireDefault(require("./IssuePreview"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -8920,22 +9117,19 @@ exports.default = void 0;
 //
 var _default = {
   name: "IssueForm",
+  components: {
+    IssuePreview: _IssuePreview.default,
+    Tabs: _vueSlimTabs.Tabs,
+    Tab: _vueSlimTabs.Tab
+  },
   props: {
-    fields: Object
+    fields: {
+      type: Object
+    },
+    previewData: {
+      type: String
+    }
   },
-
-  data() {
-    return {
-      errors: [],
-      response: {},
-      loading: false,
-      issue: {
-        title: null,
-        formFields: {}
-      }
-    };
-  },
-
   computed: {
     hasResponse() {
       return Object.keys(this.response).length > 1;
@@ -8961,9 +9155,54 @@ var _default = {
     }
 
   },
+
+  data() {
+    return {
+      errors: [],
+      response: {},
+      loading: false,
+      previewClicked: false,
+      dirty: true,
+      previewData: {},
+      issue: {
+        title: null,
+        formFields: {}
+      }
+    };
+  },
+
+  mounted() {
+    const previewTab = this.$el.querySelectorAll('.vue-tab')[1];
+    previewTab.addEventListener('click', () => {
+      if (this.previewClicked) {
+        this.loadPreview();
+      }
+
+      this.previewClicked = true;
+    });
+    previewTab.addEventListener('mouseenter', () => {
+      if (this.dirty) {
+        this.loadPreview();
+      }
+    });
+    const writeTab = this.$el.querySelectorAll('.vue-tab')[0];
+    writeTab.addEventListener('click', () => {
+      this.dirty = false;
+      this.previewClicked = false;
+    });
+  },
+
   methods: {
-    isLoading(flag) {
-      this.loading = flag;
+    somethingChanged() {
+      this.dirty = true;
+    },
+
+    loadPreview() {
+      const request = this.$api.post('reporter/report?preview=true', this.issue);
+      request.then(response => {
+        this.previewData = response;
+        this.dirty = false;
+      });
     },
 
     checkForm() {
@@ -9029,7 +9268,14 @@ exports.default = _default;
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "k-kit-form" },
+    {
+      staticClass: "k-kit-form",
+      on: {
+        input: function($event) {
+          return _vm.somethingChanged()
+        }
+      }
+    },
     [
       _vm.errors.length
         ? _c(
@@ -9037,7 +9283,7 @@ exports.default = _default;
             { staticClass: "k-kit-form--note", attrs: { theme: "negative" } },
             [
               _c("k-icon", { attrs: { type: "alert" } }),
-              _vm._v(" "),
+              _vm._v(" "),
               _vm._l(_vm.errors, function(error) {
                 return _c("p", [_vm._v(_vm._s(error))])
               })
@@ -9052,7 +9298,7 @@ exports.default = _default;
             { staticClass: "k-kit-form--note", attrs: { theme: "positive" } },
             [
               _c("k-icon", { attrs: { type: "check" } }),
-              _vm._v(" "),
+              _vm._v(" "),
               _c("p", { domProps: { innerHTML: _vm._s(_vm.successMessage) } })
             ],
             1
@@ -9090,22 +9336,42 @@ exports.default = _default;
             1
           ),
           _vm._v(" "),
-          _c("k-fieldset", {
-            attrs: { fields: _vm.fields },
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.checkForm($event)
-              }
-            },
-            model: {
-              value: _vm.issue.formFields,
-              callback: function($$v) {
-                _vm.$set(_vm.issue, "formFields", $$v)
-              },
-              expression: "issue.formFields"
-            }
-          }),
+          _c(
+            "tabs",
+            [
+              _c(
+                "tab",
+                { attrs: { title: _vm.$t("reporter.tab.write") } },
+                [
+                  _c("k-fieldset", {
+                    attrs: { fields: _vm.fields },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.checkForm($event)
+                      }
+                    },
+                    model: {
+                      value: _vm.issue.formFields,
+                      callback: function($$v) {
+                        _vm.$set(_vm.issue, "formFields", $$v)
+                      },
+                      expression: "issue.formFields"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "tab",
+                { attrs: { title: _vm.$t("reporter.tab.preview") } },
+                [_c("issue-preview", { attrs: { data: _vm.previewData } })],
+                1
+              )
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("k-line-field"),
           _vm._v(" "),
@@ -9158,7 +9424,7 @@ render._withStripped = true
       
       }
     })();
-},{"_css_loader":"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"../node_modules/vue-hot-reload-api/dist/index.js","vue":"../node_modules/vue/dist/vue.runtime.esm.js"}],"components/View.vue":[function(require,module,exports) {
+},{"vue-slim-tabs":"../node_modules/vue-slim-tabs/dist/vue-slim-tabs.common.js","./IssuePreview":"components/IssuePreview.vue","_css_loader":"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"../node_modules/vue-hot-reload-api/dist/index.js","vue":"../node_modules/vue/dist/vue.runtime.esm.js"}],"components/View.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9297,7 +9563,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53315" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52921" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1,13 +1,12 @@
 <template>
-  <div class="k-kit-form">
+  <div class="k-kit-form" @input="somethingChanged()">
+
     <k-box class="k-kit-form--note" theme="negative" v-if="errors.length">
-      <k-icon type="alert"/>
-      <p v-for="error in errors">{{ error }}</p>
+      <k-icon type="alert"/>&nbsp;<p v-for="error in errors">{{ error }}</p>
     </k-box>
 
     <k-box class="k-kit-form--note" theme="positive" v-if="hasResponse">
-      <k-icon type="check"/>
-      <p v-html="successMessage"/>
+      <k-icon type="check"/>&nbsp;<p v-html="successMessage"/>
     </k-box>
 
     <k-form>
@@ -17,7 +16,14 @@
         </k-column>
       </k-grid>
 
-      <k-fieldset :fields="fields" @submit.prevent="checkForm" v-model="issue.formFields"/>
+      <tabs>
+        <tab :title="$t('reporter.tab.write')">
+          <k-fieldset :fields="fields" @submit.prevent="checkForm" v-model="issue.formFields"/>
+        </tab>
+        <tab :title="$t('reporter.tab.preview')">
+          <issue-preview :data="previewData"/>
+        </tab>
+      </tabs>
 
       <k-line-field/>
 
@@ -28,20 +34,18 @@
 </template>
 
 <script>
+  import {Tab, Tabs} from 'vue-slim-tabs'
+  import IssuePreview from "./IssuePreview";
+
   export default {
     name: "IssueForm",
+    components: {IssuePreview, Tabs, Tab},
     props: {
-      fields: Object
-    },
-    data() {
-      return {
-        errors: [],
-        response: {},
-        loading: false,
-        issue: {
-          title: null,
-          formFields: {},
-        }
+      fields: {
+        type: Object
+      },
+      previewData: {
+        type: String
       }
     },
     computed: {
@@ -61,9 +65,51 @@
         return this.$t('reporter.form.issue.link', {issueLink, issueId})
       }
     },
+    data() {
+      return {
+        errors: [],
+        response: {},
+        loading: false,
+        previewClicked: false,
+        dirty: true,
+        previewData: {},
+        issue: {
+          title: null,
+          formFields: {},
+        }
+      }
+    },
+    mounted() {
+      const previewTab = this.$el.querySelectorAll('.vue-tab')[1];
+      previewTab.addEventListener('click', () => {
+        if (this.previewClicked) {
+          this.loadPreview();
+        }
+        this.previewClicked = true;
+      });
+
+      previewTab.addEventListener('mouseenter', () => {
+        if (this.dirty) {
+          this.loadPreview();
+        }
+      });
+
+      const writeTab = this.$el.querySelectorAll('.vue-tab')[0];
+      writeTab.addEventListener('click', () => {
+        this.dirty = false;
+        this.previewClicked = false;
+      });
+    },
     methods: {
-      isLoading(flag) {
-        this.loading = flag;
+      somethingChanged() {
+        this.dirty = true;
+      },
+      loadPreview() {
+        const request = this.$api.post('reporter/report?preview=true', this.issue);
+        request.then(response => {
+          this.previewData = response;
+          this.dirty = false;
+        });
       },
       checkForm() {
         this.errors = [];
@@ -145,7 +191,6 @@
 
     .k-input[data-theme=field][data-invalid]:focus-within {
       border: 1px solid #4271ae;
-      -webkit-box-shadow: rgba(66, 113, 174, .25) 0 0 0 2px;
       box-shadow: 0 0 0 2px rgba(66, 113, 174, .25)
     }
 
@@ -176,6 +221,40 @@
 
     .issue-link {
       margin-left: auto;
+    }
+  }
+
+  .vue-tablist {
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    margin-bottom: 1.25rem;
+  }
+
+  .vue-tab {
+    display: block;
+    cursor: pointer;
+    padding: .7rem 1rem .5rem 1rem;
+    color: #737578;
+    position: relative;
+    margin-bottom: -1px;
+
+    &[aria-selected="true"] {
+      color: #16171a;
+      background: #fafafa;
+      border-bottom: 0;
+
+
+      &:after {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 4px 4px 0 0;
+        border: 1px solid #ccc;
+        border-bottom: 0;
+      }
     }
   }
 </style>
