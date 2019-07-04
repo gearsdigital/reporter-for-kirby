@@ -5,15 +5,15 @@
 
 ## TL;DR
 
-This Kirby 3 Plugin helps to report bugs, task or features to your desired issue tracker with ease – directly from the panel!
+This Kirby 3 Plugin helps to report *bugs*, *tasks* or *features* to your desired issue tracker – directly from the Panel!
 
 ## Supported platforms
 
 - [Gitlab](https://gitlab.com)
 - [Github](https://github.com)
 - [Bitbucket Cloud](https://bitbucket.org)
-- 
-> Please open an issue if you miss something here :)
+
+> Please open an issue or provide an pull request if you miss something here :)
 
 ## Screenshot
 
@@ -21,7 +21,9 @@ This Kirby 3 Plugin helps to report bugs, task or features to your desired issue
 
 ## Installation
 
-After you've installed and configured this plugin correctly, open the panel menu and click the newly avaible "*⚡ New Issue*"-Link.
+After you've installed and configured this plugin correctly, open the panel menu and click the newly avaible menu entry:
+
+⚡ New Issue
 
 ### Download
 
@@ -40,6 +42,7 @@ composer require gearsdigital/kirby-reporter
 ```
 
 ## Options
+
 | Option | Description |
 | --- | --- |
 | `kirby-reporter.repository` | The repository to which the issues are reported.<br>*Must be a fully qualified url:* `https://github.com/gearsdigital/kirby-reporter`|
@@ -50,11 +53,9 @@ composer require gearsdigital/kirby-reporter
 
 ### Customizing the Form
 
+The custom blueprint will override the default blueprint excluding the `title` which is, apart from translations, _not_ configurable. You can fully customize the Form by using [blueprint fields](https://getkirby.com/docs/guide/blueprints/fields).
+
 Create a file named `reporter.yml` and save it to `/site/blueprints/reporter/reporter.yml`
-
-The custom blueprint will override the default blueprint excluding the `title` which is, apart from translations, _not_ configurable. It is fully customizable by using [blueprint fields](https://getkirby.com/docs/guide/blueprints/fields).
-
-Location: `/site/blueprints/reporter/reporter.yml`
 
 ```yml
 reporter:
@@ -73,7 +74,8 @@ reporter:
           text: Feature
         - value: enhancement
           text: Enhancement
-``` 
+```
+
 > It is currently not (and will probably never be) possible to map custom fields to specifc fields of your issue tracker!
 
 #### Default Blueprint
@@ -100,12 +102,13 @@ Within the template you have access to an array which contains all submitted fie
 $fields;
 ```
 
-You can and do whatever you want to customize the output using `php`. However, the generated output is always treated as plain text and used as content of the `description` field of your issue tracker.
+You can and do whatever you want to adapt the output to your needs using `php`. However, the generated output is always treated as plain text and send as content of the `description` field of your issue tracker.
+
+> It might make sense to render **markdown** or anything else your issue tracker can deal with.
 
 #### Preview
-You can use the preview tab to verify if your issue template is formatted properly.
 
->It might make sense to render **markdown** or anything else your issue tracker can deal with.
+You can use the preview tab to verify if your issue template is formatted properly.
 
 #### Default Template
 
