@@ -19,15 +19,15 @@ class PayloadInterceptor
     {
         return [
             'title'       => (string)$this->payload['title'],
-            'description' => (string)$this->renderIssueTemplate($this->payload['formFields']),
+            'description' => (string)$this->renderIssueTemplate(),
         ];
     }
 
-    private function renderIssueTemplate($formFields): string
+    public function renderIssueTemplate(): string
     {
         return Tpl::load(
             $this->getTemplate(),
-            ['fields' => $formFields]
+            ['fields' => $this->payload['formFields']]
         );
     }
 

@@ -29,10 +29,14 @@ Kirby::plugin(
                     'method'  => 'post',
                     'action'  => function () use ($url, $token) {
                         try {
+                            $isPreview = get('preview');
                             $requestBody = kirby()->api()->requestBody();
                             $vendor = new CreateVendor($url);
                             $client = new CreateClient($vendor, $token);
                             $payload = new PayloadInterceptor($requestBody);
+                            if ((bool)$isPreview) {
+                                return json_encode($payload->renderIssueTemplate());
+                            }
                             $response = $client->api->createIssue($payload->get());
 
                             return json_encode($response);
@@ -59,6 +63,9 @@ Kirby::plugin(
                 'view.issue-tracker'                       => 'New Issue',
                 'reporter.headline'                        => 'New Issue',
                 'reporter.description'                     => 'This is the place to report things that need to be improved or solved. Issues can be bugs, tasks or ideas to be discussed.',
+                'reporter.tab.write'                       => 'Write',
+                'reporter.tab.preview'                     => 'Preview',
+                'reporter.tab.preview.empty'               => 'Nothing to preview',
                 'reporter.form.field.title'                => 'Title',
                 'reporter.form.success'                    => 'Your problem has been reported successfully and is handled under case number: {issueLink}',
                 'reporter.form.issue.link'                 => '<a href="{issueLink}">#{issueId}</a>',
@@ -74,7 +81,10 @@ Kirby::plugin(
                 'view.issue-tracker'                       => 'Fehler Melden',
                 'reporter.headline'                        => 'Fehler Melden',
                 'reporter.description'                     => 'Hier können Dinge gemeldet werden die verbessert oder behoben werden müssen. Das können Fehler, Aufgaben oder Ideen sein.',
+                'reporter.tab.write'                       => 'Schreiben',
+                'reporter.tab.preview'                     => 'Vorschau',
                 'reporter.form.field.title'                => 'Titel',
+                'reporter.tab.preview.empty'               => 'Keine Vorschau verfügbar',
                 'reporter.form.success'                    => 'Ihr Bericht wurde erfolgreich übertragen und wird unter der Fallnummer {issueLink} behandelt.',
                 'reporter.form.issue.link'                 => '<a href="{issueLink}">{issueId}</a>',
                 'reporter.form.button.save'                => 'Fehler melden',
