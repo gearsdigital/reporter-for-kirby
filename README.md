@@ -13,7 +13,7 @@ This Kirby 3 Plugin helps to report *bugs*, *tasks* or *features* to your desire
 - [Github](https://github.com)
 - [Bitbucket Cloud](https://bitbucket.org)
 
-> Please open an issue or provide an pull request if you miss something here :)
+> Please open an issue or provide a pull request if you miss something here :)
 
 ## Screenshot
 
@@ -21,7 +21,7 @@ This Kirby 3 Plugin helps to report *bugs*, *tasks* or *features* to your desire
 
 ## Installation
 
-After you've installed and configured this plugin correctly, open the panel menu and click the newly avaible menu entry:
+After you've installed and configured this plugin correctly, open the panel menu and click the newly available menu entry:
 
 ⚡ New Issue
 
@@ -53,9 +53,9 @@ composer require gearsdigital/kirby-reporter
 
 ### Customizing the Form
 
-The custom blueprint will override the default blueprint excluding the `title` which is, apart from translations, _not_ configurable. You can fully customize the Form by using [blueprint fields](https://getkirby.com/docs/guide/blueprints/fields).
+The custom blueprint will override the default blueprint, excluding the `title` which is, apart from translations, _not_ configurable. You can fully customize the Form by using [blueprint fields](https://getkirby.com/docs/guide/blueprints/fields).
 
-Create a file named `reporter.yml` and save it to `/site/blueprints/reporter/reporter.yml`
+To customize the form create a file named `reporter.yml` and save it to `/site/blueprints/reporter/reporter.yml`
 
 ```yml
 reporter:
@@ -104,11 +104,11 @@ $fields;
 
 You can and do whatever you want to adapt the output to your needs using `php`. However, the generated output is always treated as plain text and send as content of the `description` field of your issue tracker.
 
-> It might make sense to render **markdown** or anything else your issue tracker can deal with.
+> Output can be anything your issue tracker can deal with. Markdown might be a good start :)
 
 #### Preview
 
-You can use the preview tab to verify if your issue template is formatted properly.
+You can use the preview tab to make sure your template is formatted properly.
 
 #### Default Template
 
@@ -130,14 +130,14 @@ For the sake of simplicity I just refer to the related help docs:
 - [Github](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line)
 - [Bitbucket Cloud](https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html)
 
-It is probably a good idea to create a custom user with limited scope access for issue reporting.
+> It's probably a good idea to create a custom user with limited scope access.
 
 ## Available translations
 
 - German
 - English
 
-Pull requests with additonal translations are very much appreciated!
+> Pull requests with additonal translations are very much appreciated!
 
 ## Development
 
