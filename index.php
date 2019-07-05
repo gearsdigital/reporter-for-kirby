@@ -13,6 +13,7 @@ if ($pluginState || is_null($pluginState)) {
 }
 $url = option('kirby-reporter.repository');
 $token = option('kirby-reporter.token');
+/** Kirby\Cms\AppPlugins */
 Kirby::plugin(
     'gearsdigital/kirby-reporter',
     [
@@ -30,7 +31,7 @@ Kirby::plugin(
                     'action'  => function () use ($url, $token) {
                         try {
                             $isPreview = get('preview');
-                            $requestBody = kirby()->api()->requestBody();
+                            $requestBody = kirby()->request()->body()->data();
                             $vendor = new CreateVendor($url);
                             $client = new CreateClient($vendor, $token);
                             $payload = new PayloadInterceptor($requestBody);
