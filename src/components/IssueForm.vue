@@ -2,11 +2,11 @@
   <div class="k-kit-form" @input="somethingChanged()">
 
     <k-box class="k-kit-form--note" theme="negative" v-if="errors.length">
-      <k-icon type="alert"/>&nbsp;<p v-for="error in errors">{{ error }}</p>
+      <k-icon type="alert"/><p v-for="error in errors">{{ error }}</p>
     </k-box>
 
     <k-box class="k-kit-form--note" theme="positive" v-if="hasResponse">
-      <k-icon type="check"/>&nbsp;<p v-html="successMessage"/>
+      <k-icon type="check"/><p v-html="successMessage"/>
     </k-box>
 
     <k-form>
