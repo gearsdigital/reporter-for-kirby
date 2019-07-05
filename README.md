@@ -17,7 +17,7 @@ This Kirby 3 Plugin helps to report *bugs*, *tasks* or *features* to your desire
 
 ## Screenshot
 
-![screenshot](https://user-images.githubusercontent.com/965069/60670911-19556d00-9e72-11e9-954f-793e2b3ee9dd.png)
+![screencapture](https://user-images.githubusercontent.com/965069/60726156-2c803f80-9f3b-11e9-97f8-43b5b71689ab.gif)
 
 ## Installation
 
