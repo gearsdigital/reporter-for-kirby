@@ -1,6 +1,6 @@
 <template>
   <k-textarea-field v-if="data" label="Preview" :value="data" :buttons="false" disabled="true"/>
-  <k-text size="small" v-else="!data">{{$t('reporter.tab.preview.empty')}}</k-text>
+  <k-text v-else="!data">{{$t('reporter.tab.preview.empty')}}</k-text>
 </template>
 
 <script>
