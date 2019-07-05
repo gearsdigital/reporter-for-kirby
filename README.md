@@ -3,9 +3,7 @@
 [![Codefactor](https://img.shields.io/codefactor/grade/github/gearsdigital/kirby-reporter.svg)](https://www.codefactor.io/repository/github/gearsdigital/kirby-reporter)
 [![Kirby](https://img.shields.io/badge/kirby-3-brightgreen.svg)](https://getkirby.com/)
 
-## TL;DR
-
-This Kirby 3 Plugin helps to report *bugs*, *tasks* or *features* to your desired issue tracker – directly from the Panel!
+Kirby Reportert helps to report *bugs*, *tasks* or *features* to your desired issue tracker – directly from the Panel!
 
 ## Supported platforms
 
@@ -25,9 +23,11 @@ After you've installed and configured this plugin correctly, open the panel menu
 
 ⚡ New Issue
 
-### Download
+### Composer
 
-Download and copy this repository to `/site/plugins/kirby-reporter`.
+```
+composer require gearsdigital/kirby-reporter
+```
 
 ### Git submodule
 
@@ -35,11 +35,9 @@ Download and copy this repository to `/site/plugins/kirby-reporter`.
 git submodule add https://github.com/gearsdigital/kirby-reporter.git site/plugins/kirby-reporter
 ```
 
-### Composer
+### Download
 
-```
-composer require gearsdigital/kirby-reporter
-```
+[Download](https://github.com/gearsdigital/kirby-reporter/releases/latest) and copy this repository to `/site/plugins/kirby-reporter`.
 
 ## Options
 
