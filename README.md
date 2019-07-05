@@ -36,6 +36,8 @@ composer require gearsdigital/kirby-reporter
 git submodule add https://github.com/gearsdigital/kirby-reporter.git site/plugins/kirby-reporter
 ```
 
+> Hint: Don't forget to run composer install in `site/plugins/kirby-reporter` .
+
 ### Download
 
 [Download](https://github.com/gearsdigital/kirby-reporter/releases/latest) and copy this repository to `/site/plugins/kirby-reporter`.
