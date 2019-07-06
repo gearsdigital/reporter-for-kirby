@@ -2,7 +2,7 @@ import View from "./components/View";
 
 panel.plugin("gearsdigital/kirby-reporter", {
   views: {
-    'issue-tracker': {
+    reporter: {
       component: View,
       icon: "bolt"
     }

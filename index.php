@@ -61,7 +61,7 @@ Kirby::plugin(
         ],
         'translations' => [
             'en' => [
-                'view.issue-tracker'                       => 'New Issue',
+                'view.reporter'                            => 'New Issue',
                 'reporter.headline'                        => 'New Issue',
                 'reporter.description'                     => 'This is the place to report things that need to be improved or solved. Issues can be bugs, tasks or ideas to be discussed.',
                 'reporter.tab.write'                       => 'Write',
@@ -79,7 +79,7 @@ Kirby::plugin(
                 'reporter.form.error.platform.unsupported' => 'Your Platform is currently not supported.',
             ],
             'de' => [
-                'view.issue-tracker'                       => 'Fehler Melden',
+                'view.reporter'                            => 'Fehler Melden',
                 'reporter.headline'                        => 'Fehler Melden',
                 'reporter.description'                     => 'Hier können Dinge gemeldet werden die verbessert oder behoben werden müssen. Das können Fehler, Aufgaben oder Ideen sein.',
                 'reporter.tab.write'                       => 'Schreiben',
