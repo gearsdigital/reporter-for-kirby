@@ -137,6 +137,7 @@ For the sake of simplicity I just refer to the related help docs:
 
 - German
 - English
+- Turkish
 
 > Pull requests with additonal translations are very much appreciated!
 
@@ -150,3 +151,7 @@ npm run test
 ## License
 
 MIT
+
+## Contributors
+
+[@afbora](https://github.com/afbora)
