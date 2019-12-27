@@ -155,3 +155,4 @@ MIT
 ## Contributors
 
 [@afbora](https://github.com/afbora)
+[@felixhaeberle](https://github.com/felixhaeberle)
