@@ -48,7 +48,17 @@ git submodule add https://github.com/gearsdigital/kirby-reporter.git site/plugin
 | --- | --- |
 | `kirby-reporter.repository` | The repository to which the issues are reported.<br>*Must be a fully qualified url:* `https://github.com/gearsdigital/kirby-reporter`|
 | `kirby-reporter.token` | Your personal access token.<br>*Your personal access token is never populated to the client!* |
-| `kirby-reporter.disabled` | Setting this option to `true` disables the plugin completely. |
+| `kirby-reporter.disabled` | Setting this option to `true` disables the plugin completely. This option *must* be present. |
+
+### Example
+```php
+// site/config/config.php
+return [
+    'kirby-reporter.disabled' => false, // set true to disable the plugin
+    'kirby-reporter.repository' => 'https://github.com/gearsdigital/kirby-reporter',
+    'kirby-reporter.token' => 'c56658e7c03a5995e2e1491e6a3b93fcde6225c9'
+];
+```
 
 ## Configuration
 
