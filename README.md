@@ -20,9 +20,8 @@ Kirby Reporter helps to report *bugs*, *tasks* or *features* to your desired iss
 
 ## Installation
 
-After you've installed and configured this plugin correctly, open the panel menu and click the newly available menu entry:
-
-⚡ New Issue
+After you've installed and configured this plugin correctly, open the panel menu and click the newly available menu entry `New Issue`. You can add also add a [section](#section)
+to any blueprint.
 
 ### Composer
 
@@ -100,11 +99,28 @@ reporter:
       help: Please be as precise as possible.
 ```
 
+You can add any fields you want but you need to adapt the issue template in order to see the fields in your preview.
+
+### Section
+
+This plugin provides also a `section` which can be used like any other section in your blueprints. You can learn about adding sections from the [Kirby Docs](https://getkirby.com/docs/guide/blueprints/layout#adding-sections).
+
+This is a very handy way to collect feedback from anywhere in your panel.
+
+```
+# site.yml
+sections:
+  reporter:
+    type: reporter
+    headline: Report issue
+    description: My custom description
+```
+
 ### Customizing the Issue Template
 
 Create a file named `reporter.php` and save it to `/site/templates/reporter.php`.
 
-Within the template you have access to an array which contains all submitted fields. Each field consists the `key` and the selected `value`.
+Within the template you have access to an array of all available fields. Each field consists the `key` and the selected `value`.
 
 ```php
 /** @var array $fields */
@@ -117,7 +133,7 @@ You can and do whatever you want to adapt the output to your needs using `php`. 
 
 #### Preview
 
-You can use the preview tab to make sure your template is formatted properly.
+You can use the preview tab to make sure your template is formatted properly. The preview is rendered using your issue template.
 
 #### Default Template
 
