@@ -13,6 +13,7 @@ if ($pluginState || is_null($pluginState)) {
 }
 $url = option('kirby-reporter.repository');
 $token = option('kirby-reporter.token');
+
 /** Kirby\Cms\AppPlugins */
 Kirby::plugin(
     'gearsdigital/kirby-reporter',
@@ -22,6 +23,9 @@ Kirby::plugin(
         ],
         'templates'    => [
             'reporter' => __DIR__.'/templates/reporter.php',
+        ],
+        'sections'    => [
+            'reporter' => [],
         ],
         'api'          => [
             'routes' => [
