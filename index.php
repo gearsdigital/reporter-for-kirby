@@ -7,8 +7,8 @@ use KirbyReporter\Client\CreateVendor;
 use KirbyReporter\Client\ErrorResponse;
 use KirbyReporter\Client\PayloadInterceptor;
 
-$pluginState = option('kirby-reporter.disabled');
-if ($pluginState || is_null($pluginState)) {
+$pluginState = option('kirby-reporter.enabled');
+if (is_null($pluginState) || !$pluginState) {
     return false;
 }
 $url = option('kirby-reporter.repository');
