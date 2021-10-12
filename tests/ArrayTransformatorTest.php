@@ -35,7 +35,7 @@ final class ArrayTransformatorTest extends TestCase
     public function arrayProvider()
     {
         return [
-            'empty-arrays'               => [
+            'empty-arrays' => [
                 [], // $expected
                 [], // $input
                 [], // $map
@@ -55,7 +55,7 @@ final class ArrayTransformatorTest extends TestCase
                 ['lastname' => 'peter'],
                 ['lastname' => 'name'],
             ],
-            'map-same-key'               => [
+            'map-same-key' => [
                 ['lastname' => 'peter'],
                 ['lastname' => 'peter'],
                 ['lastname' => 'lastname'],
@@ -70,12 +70,12 @@ final class ArrayTransformatorTest extends TestCase
                 ['lastname' => 'peter', 'street' => 'downing street 10'],
                 ['lastname' => 'name', 'street' => 'road'],
             ],
-            "map-properties"             => [
+            "map-properties" => [
                 ['name' => 'peter', 'content' => 'downing street 10'],
                 ['title' => 'peter', 'description' => 'downing street 10'],
                 ['title' => 'name', 'description' => ['content']],
             ],
-            "nested-map-properties"      => [
+            "nested-map-properties" => [
                 ['name' => 'peter', 'content' => ['raw' => 'downing street 10']],
                 ['title' => 'peter', 'description' => 'downing street 10'],
                 ['title' => 'name', 'description' => ['content.raw']],

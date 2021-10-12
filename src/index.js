@@ -1,12 +1,9 @@
-import View from "./components/View";
-import SectionView from "./components/SectionView";
+import View from "./components/View.vue";
+import SectionView from "./components/SectionView.vue";
 
 panel.plugin("gearsdigital/kirby-reporter", {
-  views: {
-    reporter: {
-      component: View,
-      icon: "bolt"
-    }
+  components: {
+    "k-reporter-view": View
   },
   sections: {
     reporter: SectionView
