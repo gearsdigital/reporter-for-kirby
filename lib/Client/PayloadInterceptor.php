@@ -18,7 +18,7 @@ class PayloadInterceptor
     public function get(): array
     {
         return [
-            'title'       => (string)$this->payload['title'],
+            'title' => (string)$this->payload['title'],
             'description' => (string)$this->renderIssueTemplate(),
         ];
     }
@@ -35,10 +35,10 @@ class PayloadInterceptor
     {
         $templateRoot = kirby()->root('templates');
         $pluginRoot = kirby()->plugin($this->pluginName);
-        $templatePath = file_exists($templateRoot.DS.$this->template)
+        $templatePath = file_exists($templateRoot . DS . $this->template)
             ? $templateRoot
-            : $pluginRoot->root().DS."templates";
+            : $pluginRoot->root() . DS . "templates";
 
-        return $templatePath.DS.$this->template;
+        return $templatePath . DS . $this->template;
     }
 }

@@ -15,10 +15,10 @@
         }
     },
     "require": {
-        "getkirby/composer-installer": "^1.1",
+        "ext-json": "*",
+        "getkirby/composer-installer": "^1.2",
         "ql/uri-template": "^1.1",
-        "guzzlehttp/guzzle": "~6.0",
-        "ext-json": "*"
+        "guzzlehttp/guzzle": "~7.0"
     },
     "config": {
         "optimize-autoloader": true

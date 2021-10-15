@@ -21,7 +21,7 @@ class ErrorResponse
     }
 
     /**
-     * @param  mixed  $status
+     * @param mixed $status
      */
     public function setStatus($status): void
     {

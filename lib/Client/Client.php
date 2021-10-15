@@ -44,7 +44,7 @@ class Client
     /**
      * Expanded url template.
      *
-     * @param  string  $url
+     * @param string $url
      *
      * @throws Exception
      */

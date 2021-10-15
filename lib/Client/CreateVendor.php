@@ -56,7 +56,7 @@ class CreateVendor
     /**
      * Vendor constructor.
      *
-     * @param  string  $url
+     * @param string $url
      *
      * @throws Exception reporter.form.error.platform.unsupported
      */

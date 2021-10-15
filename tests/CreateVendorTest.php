@@ -51,9 +51,9 @@ class CreateVendorTest extends TestCase
         return [
             'empty-string' => [''],
             'plain-string' => ['lorem'],
-            'empty-array'  => [[]],
-            'empty-null'   => [null],
-            'empty-false'  => [false]
+            'empty-array' => [[]],
+            'empty-null' => [null],
+            'empty-false' => [false]
         ];
     }
 

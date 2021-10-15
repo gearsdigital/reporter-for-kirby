@@ -3,14 +3,14 @@
 namespace KirbyReporter\Client;
 
 /**
- * Github API.
+ * Gitlab API.
  *
  * @package KirbyReporter
  * @author  Steffen Giers <steffen.giers@gmail.com>
  */
-class Github extends Client
+class Gitlab extends Client
 {
-    private $urlTemplate = "https://api.github.com/repos/{user}/{repo}/issues";
+    private $urlTemplate = "https://gitlab.com/api/v4/projects/{user}%2F{repo}/issues";
 
     public function __construct(CreateVendor $vendor, $accessToken)
     {
@@ -19,23 +19,16 @@ class Github extends Client
 
     public function createIssue(array $requestBody)
     {
-        $mapper = new RequestDataMapper(
-            $requestBody,
-            [
-                'title'       => 'title',
-                'description' => 'body',
-            ]
-        );
         $response = $this->post(
             $this->getIssueUrl(),
-            $mapper->getMappedData(),
+            $requestBody,
             [
-                "Authorization" => "token ".$this->getAccessToken(),
+                "Private-Token" => $this->getAccessToken(),
             ]
         );
         $responseMap = [
-            'number'   => 'issueId',
-            'html_url' => 'issueUrl',
+            'iid' => 'issueId',
+            'web_url' => 'issueUrl',
         ];
         $responseBody = new Response($response);
         $mapper = new ResponseMapper($responseBody, $responseMap);

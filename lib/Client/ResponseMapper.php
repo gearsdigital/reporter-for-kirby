@@ -51,9 +51,9 @@ class ResponseMapper
     /**
      * ResponseMapper constructor.
      *
-     * @param  Response  $response
+     * @param Response $response
      *
-     * @param  array  $map
+     * @param array $map
      *
      * @throws Exception
      */

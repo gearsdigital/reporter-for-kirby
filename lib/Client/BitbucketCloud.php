@@ -29,14 +29,14 @@ class BitbucketCloud extends Client
             $this->getIssueUrl(),
             $mapper->getMappedData(),
             [
-                "Authorization" => "Basic ".$this->getBasicAuth(),
+                "Authorization" => "Basic " . $this->getBasicAuth(),
             ]
         );
         $responseBody = new Response($response);
         $mapper = new ResponseMapper($responseBody, []);
         $mapper->setIssueId($responseBody->body['id']);
         $mapper->setissueUrl(
-            $responseBody->body['repository']['links']['html']['href'].'/issues/'.$responseBody->body['id']
+            $responseBody->body['repository']['links']['html']['href'] . '/issues/' . $responseBody->body['id']
         );
 
         return $mapper;
@@ -44,6 +44,6 @@ class BitbucketCloud extends Client
 
     private function getBasicAuth()
     {
-        return base64_encode($this->getUser().':'.$this->getAccessToken());
+        return base64_encode($this->getUser() . ':' . $this->getAccessToken());
     }
 }
