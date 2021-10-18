@@ -4,7 +4,7 @@ namespace KirbyReporter\Client;
 
 use Kirby\Toolkit\Tpl;
 
-class PayloadInterceptor
+class PayloadFactory
 {
     private $template = 'reporter.php';
     private $pluginName = 'gearsdigital/kirby-reporter';
@@ -15,11 +15,11 @@ class PayloadInterceptor
         $this->payload = $payload;
     }
 
-    public function get(): array
+    public function getPayloadDTO(): array
     {
         return [
             'title' => (string)$this->payload['title'],
-            'description' => (string)$this->renderIssueTemplate(),
+            'description' => $this->renderIssueTemplate(),
         ];
     }
 

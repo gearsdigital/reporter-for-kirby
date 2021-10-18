@@ -13,7 +13,7 @@ class Client
     use Request;
     use ArrayTransformator;
 
-    private ?CreateVendor $vendor = null;
+    private ?VendorFactory $vendor = null;
 
     private ?string $issueUrl = null;
 
@@ -24,7 +24,7 @@ class Client
     /**
      * @throws Exception
      */
-    protected function __construct(CreateVendor $vendor, $accessToken, $urlTemplate, $user = null)
+    protected function __construct(VendorFactory $vendor, $accessToken, $urlTemplate, $user = null)
     {
         $this->vendor = $vendor;
         $this->setUrl($urlTemplate);

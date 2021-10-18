@@ -12,7 +12,7 @@ class Gitlab extends Client implements ClientInterface
 {
     private string $urlTemplate = "https://gitlab.com/api/v4/projects/{user}%2F{repo}/issues";
 
-    public function __construct(CreateVendor $vendor, $accessToken)
+    public function __construct(VendorFactory $vendor, $accessToken)
     {
         parent::__construct($vendor, $accessToken, $this->urlTemplate);
     }

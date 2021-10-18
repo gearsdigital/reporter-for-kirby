@@ -12,7 +12,7 @@ class Github extends Client implements ClientInterface
 {
     private string $urlTemplate = "https://api.github.com/repos/{user}/{repo}/issues";
 
-    public function __construct(CreateVendor $vendor, $accessToken)
+    public function __construct(VendorFactory $vendor, $accessToken)
     {
         parent::__construct($vendor, $accessToken, $this->urlTemplate);
     }

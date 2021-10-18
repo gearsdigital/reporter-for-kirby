@@ -17,7 +17,7 @@ use KirbyReporter\Mixins\Config;
  * @package KirbyReporter
  * @author Steffen Giers <steffen.giers@gmail.com>
  */
-class CreateVendor
+class VendorFactory
 {
 
     use Config;

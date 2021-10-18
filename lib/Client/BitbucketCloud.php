@@ -12,7 +12,7 @@ class BitbucketCloud extends Client implements ClientInterface
 {
     private string $urlTemplate = "https://api.bitbucket.org/2.0/repositories/{user}/{repo}/issues";
 
-    public function __construct(CreateVendor $vendor, $accessToken, $user = null)
+    public function __construct(VendorFactory $vendor, $accessToken, $user = null)
     {
         parent::__construct($vendor, $accessToken, $this->urlTemplate, $user);
     }
