@@ -72,7 +72,7 @@ class Client
      *
      * @return string|null
      */
-    protected function getIssueUrl()
+    protected function getIssueUrlTemplate()
     {
         return $this->issueUrl;
     }

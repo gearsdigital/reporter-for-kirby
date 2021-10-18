@@ -8,38 +8,31 @@ namespace KirbyReporter\Client;
  * @package KirbyReporter
  * @author  Steffen Giers <steffen.giers@gmail.com>
  */
-class Github extends Client
+class Github extends Client implements ClientInterface
 {
-    private $urlTemplate = "https://api.github.com/repos/{user}/{repo}/issues";
+    private string $urlTemplate = "https://api.github.com/repos/{user}/{repo}/issues";
 
     public function __construct(CreateVendor $vendor, $accessToken)
     {
         parent::__construct($vendor, $accessToken, $this->urlTemplate);
     }
 
-    public function createIssue(array $requestBody)
+    public function createIssue(array $requestBody): ResponseMapper
     {
-        $mapper = new RequestDataMapper(
-            $requestBody,
-            [
-                'title' => 'title',
-                'description' => 'body',
-            ]
-        );
-        $response = $this->post(
-            $this->getIssueUrl(),
-            $mapper->getMappedData(),
-            [
-                "Authorization" => "token " . $this->getAccessToken(),
-            ]
-        );
-        $responseMap = [
+        $mapper = new RequestDataMapper($requestBody, [
+            'title' => 'title',
+            'description' => 'body',
+        ]);
+
+        $request = $this->post($this->getIssueUrlTemplate(), $mapper->getMappedData(), [
+            "Authorization" => "token ".$this->getAccessToken(),
+        ]);
+
+        $response = new Response($request);
+
+        return new ResponseMapper($response, [
             'number' => 'issueId',
             'html_url' => 'issueUrl',
-        ];
-        $responseBody = new Response($response);
-        $mapper = new ResponseMapper($responseBody, $responseMap);
-
-        return $mapper;
+        ]);
     }
 }

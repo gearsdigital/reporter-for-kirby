@@ -10,20 +10,14 @@ namespace KirbyReporter\Client;
  */
 class CreateClient
 {
-    public $api;
+    public Gitlab|Github|BitbucketCloud $api;
 
     public function __construct(CreateVendor $vendor, $token)
     {
-        switch ($vendor->name) {
-            case 'github':
-                $this->api = new Github($vendor, $token);
-                break;
-            case 'gitlab':
-                $this->api = new Gitlab($vendor, $token);
-                break;
-            case 'bitbucket':
-                $this->api = new BitbucketCloud($vendor, $token);
-                break;
-        }
+        $this->api = match ($vendor->name) {
+            'github' => new Github($vendor, $token),
+            'gitlab' => new Gitlab($vendor, $token),
+            'bitbucket' => new BitbucketCloud($vendor, $token),
+        };
     }
 }

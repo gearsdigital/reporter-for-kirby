@@ -60,7 +60,7 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
                         $client = new CreateClient($vendor, $token);
                         $payload = new PayloadInterceptor($requestBody);
 
-                        if ((bool)$isPreview) {
+                        if ($isPreview) {
                             return json_encode($payload->renderIssueTemplate());
                         }
 

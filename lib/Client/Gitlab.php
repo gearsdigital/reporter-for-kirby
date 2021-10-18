@@ -8,19 +8,19 @@ namespace KirbyReporter\Client;
  * @package KirbyReporter
  * @author  Steffen Giers <steffen.giers@gmail.com>
  */
-class Gitlab extends Client
+class Gitlab extends Client implements ClientInterface
 {
-    private $urlTemplate = "https://gitlab.com/api/v4/projects/{user}%2F{repo}/issues";
+    private string $urlTemplate = "https://gitlab.com/api/v4/projects/{user}%2F{repo}/issues";
 
     public function __construct(CreateVendor $vendor, $accessToken)
     {
         parent::__construct($vendor, $accessToken, $this->urlTemplate);
     }
 
-    public function createIssue(array $requestBody)
+    public function createIssue(array $requestBody): ResponseMapper
     {
         $response = $this->post(
-            $this->getIssueUrl(),
+            $this->getIssueUrlTemplate(),
             $requestBody,
             [
                 "Private-Token" => $this->getAccessToken(),
