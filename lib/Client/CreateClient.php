@@ -2,6 +2,8 @@
 
 namespace KirbyReporter\Client;
 
+use QL\UriTemplate\Exception;
+
 /**
  * Create a Client.
  *
@@ -12,7 +14,10 @@ class CreateClient
 {
     public $api;
 
-    public function __construct(CreateVendor $vendor, $token)
+    /**
+     * @throws Exception
+     */
+    public function __construct(CreateVendor $vendor, $token, $user)
     {
         switch ($vendor->name) {
             case 'github':
@@ -22,7 +27,7 @@ class CreateClient
                 $this->api = new Gitlab($vendor, $token);
                 break;
             case 'bitbucket':
-                $this->api = new BitbucketCloud($vendor, $token);
+                $this->api = new BitbucketCloud($vendor, $token, $user);
                 break;
         }
     }
