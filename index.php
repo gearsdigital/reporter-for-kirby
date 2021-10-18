@@ -7,7 +7,7 @@ use KirbyReporter\Client\CreateVendor;
 use KirbyReporter\Client\ErrorResponse;
 use KirbyReporter\Client\PayloadInterceptor;
 
-@include_once __DIR__ . '/vendor/autoload.php';
+@include_once __DIR__.'/vendor/autoload.php';
 
 if (empty(option('kirby-reporter.enabled', false)) === true) {
     return false;
@@ -15,6 +15,7 @@ if (empty(option('kirby-reporter.enabled', false)) === true) {
 
 $url = option('kirby-reporter.repository');
 $token = option('kirby-reporter.token');
+$bitbucketUser = option('kirby-reporter.bitbucket.user');
 
 Kirby::plugin('gearsdigital/kirby-reporter', [
     'areas' => [
@@ -30,19 +31,19 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
                         'action' => function () {
                             return [
                                 'component' => 'k-reporter-view',
-                                'title' => t('reporter.headline')
+                                'title' => t('reporter.headline'),
                             ];
-                        }
-                    ]
-                ]
+                        },
+                    ],
+                ],
             ];
-        }
+        },
     ],
     'blueprints' => [
-        'reporter/reporter' => __DIR__ . '/blueprints/reporter/reporter.yml',
+        'reporter/reporter' => __DIR__.'/blueprints/reporter/reporter.yml',
     ],
     'templates' => [
-        'reporter' => __DIR__ . '/templates/reporter.php',
+        'reporter' => __DIR__.'/templates/reporter.php',
     ],
     'sections' => [
         'reporter' => [],
@@ -52,12 +53,12 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
             [
                 'pattern' => 'reporter/report',
                 'method' => 'post',
-                'action' => function () use ($url, $token) {
+                'action' => function () use ($url, $token, $bitbucketUser) {
                     try {
                         $isPreview = get('preview');
                         $requestBody = kirby()->request()->body()->data();
                         $vendor = new CreateVendor($url);
-                        $client = new CreateClient($vendor, $token);
+                        $client = new CreateClient($vendor, $token, $bitbucketUser);
                         $payload = new PayloadInterceptor($requestBody);
 
                         if ($isPreview) {
@@ -65,9 +66,11 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
                         }
 
                         $response = $client->api->createIssue($payload->get());
+
                         return json_encode($response);
                     } catch (Exception $e) {
                         $errorResponse = new ErrorResponse($e);
+
                         return json_encode($errorResponse);
                     }
                 },

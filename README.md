@@ -46,6 +46,7 @@ git submodule add https://github.com/gearsdigital/kirby-reporter.git site/plugin
 | `kirby-reporter.repository` | The repository to which the issues are reported.<br>*Must be a fully qualified url:* `https://github.com/gearsdigital/kirby-reporter`|
 | `kirby-reporter.token` | Your personal access token (PAT).<br>*Your personal access token is never populated to the client!* |
 | `kirby-reporter.enabled` | Must be present and set to `true`, otherwise the plugin will not work |
+| `kirby-reporter.bitbucket.user` | Allow to define a custom bitbucket user. For details read #33 |
 
 ### Example
 ```php

@@ -8,42 +8,34 @@ namespace KirbyReporter\Client;
  * @package KirbyReporter
  * @author  Steffen Giers <steffen.giers@gmail.com>
  */
-class BitbucketCloud extends Client
+class BitbucketCloud extends Client implements ClientInterface
 {
-    private $urlTemplate = "https://api.bitbucket.org/2.0/repositories/{user}/{repo}/issues";
+    private string $urlTemplate = "https://api.bitbucket.org/2.0/repositories/{user}/{repo}/issues";
 
-    public function __construct(CreateVendor $vendor, $accessToken)
+    public function __construct(CreateVendor $vendor, $accessToken, $user = null)
     {
-        parent::__construct($vendor, $accessToken, $this->urlTemplate);
+        parent::__construct($vendor, $accessToken, $this->urlTemplate, $user);
     }
 
-    public function createIssue(array $requestBody)
+    public function createIssue(array $requestBody): ResponseMapper
     {
-        $mapper = new RequestDataMapper(
-            $requestBody,
-            [
-                'description' => ['content.raw'],
-            ]
-        );
-        $response = $this->post(
-            $this->getIssueUrl(),
-            $mapper->getMappedData(),
-            [
-                "Authorization" => "Basic " . $this->getBasicAuth(),
-            ]
-        );
-        $responseBody = new Response($response);
-        $mapper = new ResponseMapper($responseBody, []);
-        $mapper->setIssueId($responseBody->body['id']);
-        $mapper->setissueUrl(
-            $responseBody->body['repository']['links']['html']['href'] . '/issues/' . $responseBody->body['id']
-        );
+        $mapper = new RequestDataMapper($requestBody, [
+            'description' => ['content.raw'],
+        ]);
+        $request = $this->post($this->getIssueUrlTemplate(), $mapper->getMappedData(), [
+            "Authorization" => "Basic ".$this->getBasicAuth(),
+        ]);
 
-        return $mapper;
+        $response = new Response($request);
+        $url = $response->body['repository']['links']['html']['href'].'/issues/'.$response->body['id'];
+        $id = $response->body['id'];
+        $status = $response->status;
+
+        return new ResponseMapper($url, $id, $status);
     }
 
-    private function getBasicAuth()
+    private function getBasicAuth(): string
     {
-        return base64_encode($this->getUser() . ':' . $this->getAccessToken());
+        return base64_encode($this->getUser().':'.$this->getAccessToken());
     }
 }

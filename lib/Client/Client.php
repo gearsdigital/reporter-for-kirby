@@ -13,42 +13,36 @@ class Client
     use Request;
     use ArrayTransformator;
 
-    /**
-     * Vendor.
-     *
-     * @var CreateVendor|null
-     */
-    private $vendor = null;
+    private ?CreateVendor $vendor = null;
+
+    private ?string $issueUrl = null;
+
+    private ?string $accessToken = null;
+
+    private ?string $user = null;
 
     /**
-     * A templated url.
-     *
-     * @var null |string
+     * @throws Exception
      */
-    private $issueUrl = null;
-
-    /**
-     * Personal access token.
-     *
-     * @var string | null
-     */
-    private $accessToken = null;
-
-    protected function __construct(CreateVendor $vendor, $accessToken, $urlTemplate)
+    protected function __construct(CreateVendor $vendor, $accessToken, $urlTemplate, $user)
     {
         $this->vendor = $vendor;
         $this->setUrl($urlTemplate);
         $this->setToken($accessToken);
+
+        if ($user) {
+            $this->user = $user;
+        }
     }
 
     /**
      * Expanded url template.
      *
-     * @param string $url
+     * @param  string  $url
      *
      * @throws Exception
      */
-    private function setUrl($url): void
+    private function setUrl(string $url): void
     {
         $this->issueUrl = $this->expandUrl(
             $url,
@@ -59,6 +53,9 @@ class Client
         );
     }
 
+    /**
+     * @throws Exception
+     */
     private function setToken($accessToken): void
     {
         if (is_null($accessToken)) {
@@ -72,7 +69,7 @@ class Client
      *
      * @return string|null
      */
-    protected function getIssueUrlTemplate()
+    protected function getIssueUrlTemplate(): ?string
     {
         return $this->issueUrl;
     }
@@ -82,18 +79,22 @@ class Client
      *
      * @return null|string
      */
-    protected function getAccessToken()
+    protected function getAccessToken(): ?string
     {
         return $this->accessToken;
     }
 
     /**
-     * Return detected user.
+     * Return detected or specified user.
      *
      * @return string|null
      */
-    protected function getUser()
+    protected function getUser(): ?string
     {
+        if ($this->user != null) {
+            return $this->user;
+        }
+
         return $this->vendor->owner;
     }
 }
