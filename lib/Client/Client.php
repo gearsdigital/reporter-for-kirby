@@ -24,7 +24,7 @@ class Client
     /**
      * @throws Exception
      */
-    protected function __construct(CreateVendor $vendor, $accessToken, $urlTemplate, $user)
+    protected function __construct(CreateVendor $vendor, $accessToken, $urlTemplate, $user = null)
     {
         $this->vendor = $vendor;
         $this->setUrl($urlTemplate);

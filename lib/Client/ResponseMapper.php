@@ -2,14 +2,9 @@
 
 namespace KirbyReporter\Client;
 
-use Exception;
-use KirbyReporter\Mixins\ArrayTransformator;
-
 /**
  * ResponseMapper
- *
- * Public properties define the response object. If you're going to extend the response
- * object you have to make sure to adapt all implented maps.
+
  *
  * @package KirbyReporter\Client
  * @author Steffen Giers <steffen.giers@gmail.com>
@@ -17,21 +12,17 @@ use KirbyReporter\Mixins\ArrayTransformator;
 class ResponseMapper
 {
 
-    use ArrayTransformator;
-
     public int $status;
 
     public string $issueId;
 
     public string $issueUrl;
 
-    public function __construct(Response $response, array $map)
+    public function __construct($issueUrl, $issueId, $status)
     {
-        $map = $this->transform($response->body, $map);
-
-        $this->setStatus($response->status);
-        $this->setIssueUrl($map['issueUrl']);
-        $this->setIssueId($map['issueId']);
+        $this->setStatus($status);
+        $this->setIssueUrl($issueUrl);
+        $this->setIssueId($issueId);
     }
 
     public function setIssueId($id)

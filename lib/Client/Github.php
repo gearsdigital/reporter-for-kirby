@@ -29,10 +29,10 @@ class Github extends Client implements ClientInterface
         ]);
 
         $response = new Response($request);
+        $url = $response->body['html_url'];
+        $id = $response->body['number'];
+        $status = $response->status;
 
-        return new ResponseMapper($response, [
-            'number' => 'issueId',
-            'html_url' => 'issueUrl',
-        ]);
+        return new ResponseMapper($url, $id, $status);
     }
 }

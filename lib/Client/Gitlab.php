@@ -19,20 +19,19 @@ class Gitlab extends Client implements ClientInterface
 
     public function createIssue(array $requestBody): ResponseMapper
     {
-        $response = $this->post(
+        $request = $this->post(
             $this->getIssueUrlTemplate(),
             $requestBody,
             [
                 "Private-Token" => $this->getAccessToken(),
             ]
         );
-        $responseMap = [
-            'iid' => 'issueId',
-            'web_url' => 'issueUrl',
-        ];
-        $responseBody = new Response($response);
-        $mapper = new ResponseMapper($responseBody, $responseMap);
 
-        return $mapper;
+        $response = new Response($request);
+        $url = $response->body['web_url'];
+        $id = $response->body['iid'];
+        $status = $response->status;
+
+        return new ResponseMapper($url, $id, $status);
     }
 }
