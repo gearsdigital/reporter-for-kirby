@@ -3,7 +3,6 @@
 use Kirby\Cms\App as Kirby;
 use Kirby\Cms\Blueprint;
 use KirbyReporter\Client\ClientFactory;
-use KirbyReporter\Client\VendorFactory;
 use KirbyReporter\Client\ErrorResponse;
 use KirbyReporter\Client\PayloadFactory;
 
@@ -55,19 +54,14 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
                 'method' => 'post',
                 'action' => function () use ($url, $token, $bitbucketUser) {
                     try {
-                        $isPreview = get('preview');
-                        $requestBody = kirby()->request()->body()->data();
-
-                        // Detect the current vendor (gitlab, github or bitbucket)
-                        $vendor = new VendorFactory($url);
-
-                        // Create a vendor specific client
-                        $client = new ClientFactory($vendor, $token, $bitbucketUser);
+                        // Detect the current vendor (gitlab, github or bitbucket) and create client
+                        $client = new ClientFactory($url, $token, $bitbucketUser);
 
                         // Render the issue template and create the payload which is passed to the vendor api
+                        $requestBody = kirby()->request()->body()->data();
                         $payload = new PayloadFactory($requestBody);
 
-                        if ($isPreview) {
+                        if (get('preview')) {
                             return json_encode($payload->renderIssueTemplate());
                         }
 

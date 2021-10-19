@@ -16,9 +16,12 @@ class ClientFactory
 
     /**
      * @throws Exception
+     * @throws \Exception
      */
-    public function __construct(VendorFactory $vendor, $token, $user)
+    public function __construct($url, $token, $user)
     {
+        $vendor = new VendorFactory($url);
+
         switch ($vendor->name) {
             case 'github':
                 $this->vendor = new Github($vendor, $token);

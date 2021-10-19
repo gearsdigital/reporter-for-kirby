@@ -26,10 +26,10 @@ class BitbucketCloud extends Client implements ClientInterface
             "Authorization" => "Basic ".$this->getBasicAuth(),
         ]);
 
-        $response = new Response($request);
-        $url = $response->body['repository']['links']['html']['href'].'/issues/'.$response->body['id'];
-        $id = $response->body['id'];
-        $status = $response->status;
+        $body = json_decode($request->getBody()->getContents(), true);
+        $id = $body['id'];
+        $url = $body['repository']['links']['html']['href'].'/issues/'.$id;
+        $status = $request->getStatusCode();
 
         return new ResponseMapper($url, $id, $status);
     }
