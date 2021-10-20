@@ -6,34 +6,21 @@ use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Request handler.
+ * Perform a HTTP request.
  *
- * @package KirbyReporter\Helper
+ * @package KirbyReporter\Mixins
  * @author Steffen Giers <steffen.giers@gmail.com>
  */
 trait Request
 {
-    /**
-     * Make a post request to given $url;
-     *
-     * @param  string  $url
-     * @param $body
-     * @param $headers
-     *
-     * @return ResponseInterface
-     */
-    public function post($url, $body, $headers): ResponseInterface
+    public final function post(string $url, array $body, array $headers): ResponseInterface
     {
-        // it might make sense to refactor this if neccessary
-        $client = new Client();
         $headers['Content-Type'] = 'application/json';
+        $client = new Client();
 
-        return $client->post(
-            $url,
-            [
-                'headers' => $headers,
-                'json'    => $body,
-            ]
-        );
+        return $client->post($url, [
+            'headers' => $headers,
+            'json' => $body,
+        ]);
     }
 }

@@ -1,10 +1,11 @@
 <?php
 
+use GuzzleHttp\Exception\ServerException;
 use Kirby\Cms\App as Kirby;
 use Kirby\Cms\Blueprint;
-use KirbyReporter\Client\ClientFactory;
-use KirbyReporter\Client\ErrorResponse;
-use KirbyReporter\Client\PayloadFactory;
+use KirbyReporter\Payload\Payload;
+use KirbyReporter\Report\ReportClient;
+use KirbyReporter\Vendor\Vendor;
 
 @include_once __DIR__.'/vendor/autoload.php';
 
@@ -14,7 +15,7 @@ if (empty(option('kirby-reporter.enabled', false)) === true) {
 
 $url = option('kirby-reporter.repository');
 $token = option('kirby-reporter.token');
-$bitbucketUser = option('kirby-reporter.bitbucket.user');
+$user = option('kirby-reporter.bitbucket.user');
 
 Kirby::plugin('gearsdigital/kirby-reporter', [
     'areas' => [
@@ -52,26 +53,15 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
             [
                 'pattern' => 'reporter/report',
                 'method' => 'post',
-                'action' => function () use ($url, $token, $bitbucketUser) {
+                'action' => function () use ($url, $token, $user) {
                     try {
-                        // Detect the current vendor (gitlab, github or bitbucket) and create client
-                        $client = new ClientFactory($url, $token, $bitbucketUser);
+                        $vendor = new Vendor($url, $token, $user);
+                        $client = new ReportClient($vendor);
+                        $formData = new Payload(kirby()->request()->body()->data());
 
-                        // Render the issue template and create the payload which is passed to the vendor api
-                        $requestBody = kirby()->request()->body()->data();
-                        $payload = new PayloadFactory($requestBody);
-
-                        if (get('preview')) {
-                            return json_encode($payload->renderIssueTemplate());
-                        }
-
-                        $response = $client->vendor->createIssue($payload->getPayloadDTO());
-
-                        return json_encode($response);
-                    } catch (Exception $e) {
-                        $errorResponse = new ErrorResponse($e);
-
-                        return json_encode($errorResponse);
+                        return $client->report($formData->payload)->toJson();
+                    } catch (ServerException $e) {
+                        return $e;
                     }
                 },
             ],

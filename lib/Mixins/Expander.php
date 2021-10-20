@@ -8,7 +8,7 @@ use QL\UriTemplate\UriTemplate;
 /**
  * Expander is a simple helper to expand templated Urls.
  *
- * @package KirbyReporter\Client
+ * @package KirbyReporter\Mixins
  * @author Steffen Giers <steffen.giers@gmail.com>
  */
 trait Expander
@@ -22,7 +22,7 @@ trait Expander
      * @return string
      * @throws Exception
      */
-    private function expandUrl(string $template, array $data)
+    public final function expandUrl(string $template, array $data): string
     {
         $tpl = new UriTemplate($template);
 
