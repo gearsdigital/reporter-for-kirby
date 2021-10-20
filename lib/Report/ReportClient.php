@@ -18,7 +18,7 @@ class ReportClient
     /**
      * @var BitbucketReport|GithubReport|GitlabReport
      */
-    private $client;
+    public $client;
 
     public function __construct(Vendor $vendor)
     {

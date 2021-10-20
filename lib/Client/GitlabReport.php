@@ -2,8 +2,8 @@
 
 namespace KirbyReporter\Client;
 
-use KirbyReporter\Mixins\Expander;
-use KirbyReporter\Mixins\Request;
+use KirbyReporter\Traits\Expander;
+use KirbyReporter\Traits\Request;
 use KirbyReporter\Report\ReportInterface;
 use KirbyReporter\Report\ReportResponse;
 use KirbyReporter\Vendor\Vendor;

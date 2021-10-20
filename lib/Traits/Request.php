@@ -1,6 +1,6 @@
 <?php
 
-namespace KirbyReporter\Mixins;
+namespace KirbyReporter\Traits;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * Perform a HTTP request.
  *
- * @package KirbyReporter\Mixins
+ * @package KirbyReporter\Traits
  * @author Steffen Giers <steffen.giers@gmail.com>
  */
 trait Request

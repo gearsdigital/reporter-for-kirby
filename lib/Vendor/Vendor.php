@@ -25,7 +25,7 @@ class Vendor
 
     public ?string $repository = null;
 
-    public function __construct(string $url, string $token, string $user)
+    public function __construct(string $url, string $token, ?string $user = null)
     {
         $this->url = $url;
         $this->token = $token;
@@ -40,13 +40,9 @@ class Vendor
         }
     }
 
-    private function setUser(string $user): void
+    private function setUser(?string $user): void
     {
-        if ($user == null) {
-            $this->user = $this->owner;
-        }
-
-        $this->user = $user;
+        $this->user = $user == null ? $this->owner : $user;
     }
 
     private function extractProviderName(): ?string
