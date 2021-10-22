@@ -3,18 +3,37 @@ name: PHP Composer
 on: [push]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+        with:
+          path: 'kirby-reporter'
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate
+      - name: Install Starterkit
+        run: |
+          git clone https://github.com/getkirby/starterkit.git
+          mkdir starterkit/site/plugins
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+      - name: Update Kirby
+        run: |
+          rm -rf starterkit/kirby
+          composer require getkirby/cms:3.6.0-rc.1@dev
+          mv kirby starterkit
+          cd starterkit/kirby
+          composer install
 
-      - name: Run test suite
-        run: composer run-script test
+      - name: Install
+        run: |
+          mv kirby-reporter starterkit/site/plugins
+          cd starterkit/site/plugins/kirby-reporter
+          composer install
+
+      - name: Tests
+        run: |
+          cd starterkit/site/plugins/kirby-reporter
+          export KIRBY_REPORTER_TEST=true
+          composer validate
+          composer test

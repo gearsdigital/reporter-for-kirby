@@ -8,7 +8,8 @@ use KirbyReporter\Vendor\Vendor;
 
 @include_once __DIR__.'/vendor/autoload.php';
 
-if (empty(option('kirby-reporter.enabled', false)) === true) {
+if (empty(option('kirby-reporter.enabled', false)) === true
+    && !getenv("KIRBY_REPORTER_TEST")) {
     return false;
 }
 
