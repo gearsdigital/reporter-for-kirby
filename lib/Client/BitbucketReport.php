@@ -2,16 +2,18 @@
 
 namespace KirbyReporter\Client;
 
+use KirbyReporter\Report\ReportInterface;
+use KirbyReporter\Report\ReportTemplateParser;
+use KirbyReporter\Report\ReportResponse;
 use KirbyReporter\Traits\Expander;
 use KirbyReporter\Traits\Request;
-use KirbyReporter\Report\ReportInterface;
-use KirbyReporter\Report\ReportResponse;
 use KirbyReporter\Vendor\Vendor;
 
 class BitbucketReport implements ReportInterface
 {
     use Request;
     use Expander;
+    use ReportTemplateParser;
 
     private string $urlTemplate = "https://api.bitbucket.org/2.0/repositories/{user}/{repo}/issues";
 
@@ -22,25 +24,25 @@ class BitbucketReport implements ReportInterface
         $this->vendor = $vendor;
     }
 
-    public final function report(array $requestBody): ReportResponse
+    public final function report(array $reportData): ReportResponse
     {
         $url = $this->expandUrl($this->urlTemplate, [
             "user" => $this->vendor->owner,
             "repo" => $this->vendor->repository,
         ]);
 
-        $requestBody = [
-            "title" => $requestBody['title'],
-            "description" => $requestBody['description'],
+        $reportData = [
+            "title" => $reportData['title'],
+            "description" => $this->parseTemplate($reportData),
         ];
 
         $header = ["Authorization" => "Basic ".$this->getBasicAuth()];
-        $request = $this->post($url, $requestBody, $header);
-        $body = json_decode($request->getBody()->getContents(), true);
+        $request = $this->post($url, $reportData, $header);
 
         $status = $request->getStatusCode();
-        $issueId = $body['id'];
-        $issueUrl = $body['repository']['links']['html']['href'].'/issues/'.$issueId;
+        $response = json_decode($request->getBody()->getContents(), true);
+        $issueId = $response['id'];
+        $issueUrl = $response['repository']['links']['html']['href'].'/issues/'.$issueId;
 
         return new ReportResponse($status, $issueUrl, $issueId);
     }

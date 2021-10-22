@@ -51,7 +51,7 @@ class ReportClientTest extends TestCase
         $stub->name = "github";
 
         $client = new ReportClient($stub);
-        $this->assertTrue(method_exists($client, 'report'));
+        $this->assertTrue(method_exists($client, 'createReport'));
     }
 }
 

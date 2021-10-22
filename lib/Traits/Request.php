@@ -13,14 +13,24 @@ use Psr\Http\Message\ResponseInterface;
  */
 trait Request
 {
+    private ?Client $client = null;
+
     public final function post(string $url, array $body, array $headers): ResponseInterface
     {
-        $headers['Content-Type'] = 'application/json';
-        $client = new Client();
+        if (!$this->client) {
+            $this->client = new Client();
+        }
 
-        return $client->post($url, [
+        $headers['Content-Type'] = 'application/json';
+
+        return $this->client->post($url, [
             'headers' => $headers,
             'json' => $body,
         ]);
+    }
+
+    public function setClient(Client $client): void
+    {
+        $this->client = $client;
     }
 }

@@ -8,5 +8,5 @@ namespace KirbyReporter\Report;
  */
 interface ReportInterface
 {
-    public function report(array $requestBody): ReportResponse;
+    public function report(array $reportData): ReportResponse;
 }

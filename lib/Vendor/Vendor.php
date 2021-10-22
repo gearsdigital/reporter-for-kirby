@@ -13,17 +13,17 @@ class Vendor
 {
     use Vendors;
 
-    public ?string $url = null;
+    public string $url;
 
-    public ?string $name = null;
+    public string $name;
 
-    public ?string $owner = null;
+    public string $owner;
 
-    public ?string $user = null;
+    public string $user;
 
-    public ?string $token = null;
+    public string $token;
 
-    public ?string $repository = null;
+    public string $repository;
 
     public function __construct(string $url, string $token, ?string $user = null)
     {

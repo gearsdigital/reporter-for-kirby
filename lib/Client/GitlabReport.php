@@ -2,16 +2,18 @@
 
 namespace KirbyReporter\Client;
 
+use KirbyReporter\Report\ReportInterface;
+use KirbyReporter\Report\ReportTemplateParser;
+use KirbyReporter\Report\ReportResponse;
 use KirbyReporter\Traits\Expander;
 use KirbyReporter\Traits\Request;
-use KirbyReporter\Report\ReportInterface;
-use KirbyReporter\Report\ReportResponse;
 use KirbyReporter\Vendor\Vendor;
 
 class GitlabReport implements ReportInterface
 {
     use Request;
     use Expander;
+    use ReportTemplateParser;
 
     private string $urlTemplate = "https://gitlab.com/api/v4/projects/{user}%2F{repo}/issues";
 
@@ -22,20 +24,20 @@ class GitlabReport implements ReportInterface
         $this->vendor = $vendor;
     }
 
-    public final function report(array $requestBody): ReportResponse
+    public final function report(array $reportData): ReportResponse
     {
         $url = $this->expandUrl($this->urlTemplate, [
             "user" => $this->vendor->owner,
             "repo" => $this->vendor->repository,
         ]);
 
-        $requestBody = [
-            "title" => $requestBody['title'],
-            "description" => $requestBody['description'],
+        $reportData = [
+            "title" => $reportData['title'],
+            "description" => $this->parseTemplate($reportData),
         ];
 
         $header = ["Private-Token" => $this->vendor->token];
-        $request = $this->post($url, $requestBody, $header);
+        $request = $this->post($url, $reportData, $header);
         $body = json_decode($request->getBody()->getContents(), true);
 
         $status = $request->getStatusCode();

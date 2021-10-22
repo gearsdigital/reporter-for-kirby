@@ -1,20 +1,14 @@
 <?php
 
-namespace KirbyReporter\Template;
+namespace KirbyReporter\Report;
 
 use Kirby\Toolkit\Tpl;
 
-/**
- * Loads and renders the reporter template.
- *
- * @package KirbyReporter\Payload
- * @author Steffen Giers <steffen.giers@gmail.com>
- */
-class TemplateRenderer
+trait ReportTemplateParser
 {
     private string $pluginName = 'gearsdigital/kirby-reporter';
 
-    public function renderReportTemplate(array $formData): string
+    public function parseTemplate(array $formData): string
     {
         return Tpl::load($this->getReportTemplate(), ['fields' => $formData['formFields']]);
     }

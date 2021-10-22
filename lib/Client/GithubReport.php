@@ -2,6 +2,7 @@
 
 namespace KirbyReporter\Client;
 
+use KirbyReporter\Report\ReportTemplateParser;
 use KirbyReporter\Traits\Expander;
 use KirbyReporter\Traits\Request;
 use KirbyReporter\Report\ReportInterface;
@@ -12,6 +13,7 @@ class GithubReport implements ReportInterface
 {
     use Request;
     use Expander;
+    use ReportTemplateParser;
 
     private string $urlTemplate = "https://api.github.com/repos/{user}/{repo}/issues";
 
@@ -22,20 +24,20 @@ class GithubReport implements ReportInterface
         $this->vendor = $vendor;
     }
 
-    public final function report(array $requestBody): ReportResponse
+    public final function report(array $reportData): ReportResponse
     {
         $url = $this->expandUrl($this->urlTemplate, [
             "user" => $this->vendor->owner,
             "repo" => $this->vendor->repository,
         ]);
 
-        $requestBody = [
-            "title" => $requestBody['title'],
-            "body" => $requestBody['description'],
+        $reportData = [
+            "title" => $reportData['title'],
+            "body" =>  $this->parseTemplate($reportData),
         ];
 
         $header = ["Authorization" => "token ".$this->vendor->token];
-        $request = $this->post($url, $requestBody, $header);
+        $request = $this->post($url, $reportData, $header);
         $body = json_decode($request->getBody()->getContents(), true);
 
         $status = $request->getStatusCode();

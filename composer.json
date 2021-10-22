@@ -27,6 +27,6 @@
         "phpunit/phpunit": "^9.5.10"
     },
     "scripts": {
-        "test": "phpunit --bootstrap vendor/autoload.php tests"
+        "test": "phpunit --bootstrap tests/bootstrap.php tests"
     }
 }

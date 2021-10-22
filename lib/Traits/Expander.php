@@ -8,6 +8,8 @@ use QL\UriTemplate\UriTemplate;
 /**
  * Expander is a simple helper to expand templated Urls.
  *
+ * Trailing slashes are removed.
+ *
  * @package KirbyReporter\Traits
  * @author Steffen Giers <steffen.giers@gmail.com>
  */
@@ -25,7 +27,6 @@ trait Expander
     public final function expandUrl(string $template, array $data): string
     {
         $tpl = new UriTemplate($template);
-
-        return $tpl->expand($data);
+        return rtrim($tpl->expand($data), '/');
     }
 }

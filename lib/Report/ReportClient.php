@@ -35,8 +35,8 @@ class ReportClient
         }
     }
 
-    public final function report(array $requestBody): ReportResponse
+    public final function createReport(array $formData): ReportResponse
     {
-        return $this->client->report($requestBody);
+        return $this->client->report($formData);
     }
 }
