@@ -55,7 +55,7 @@
 .vue-tab {
   display: block;
   cursor: pointer;
-  padding: 0.7rem 1rem 0.5rem 1rem;
+  padding: 0.7rem 1rem 0.5rem;
   color: #737578;
   position: relative;
   margin-bottom: -1px;
