@@ -109,7 +109,7 @@ export default {
       this.dirty = true;
     },
     loadPreview() {
-      const request = this.$api.post('reporter/report?preview=true', this.issue);
+      const request = this.$api.post('reporter/report/preview', this.issue);
       request.then(response => {
         this.previewData = response;
         this.dirty = false;

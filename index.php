@@ -4,11 +4,13 @@ use GuzzleHttp\Exception\ServerException;
 use Kirby\Cms\App as Kirby;
 use Kirby\Cms\Blueprint;
 use KirbyReporter\Report\ReportClient;
+use KirbyReporter\Report\ReportTemplateParser;
 use KirbyReporter\Vendor\Vendor;
 
 @include_once __DIR__.'/vendor/autoload.php';
 
 if (empty(option('kirby-reporter.enabled', false)) === true
+    // this is only neccessary to run tests in CI env
     && !getenv("KIRBY_REPORTER_TEST")) {
     return false;
 }
@@ -60,6 +62,26 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
                         $client = new ReportClient($vendor);
 
                         return $client->createReport($formData)->toJson();
+                    } catch (ServerException $e) {
+                        return $e;
+                    }
+                },
+            ],
+            [
+                'pattern' => 'reporter/report/preview',
+                'method' => 'post',
+                'action' => function () use ($url, $token, $user) {
+                    try {
+                        $formData = kirby()->request()->body()->data();
+                        if (isset($formData['formFields']['description'])) {
+                            $parsedTemplate = (new class {
+                                use ReportTemplateParser;
+                            })->parseTemplate($formData);
+
+                            return json_encode($parsedTemplate);
+                        }
+
+                        return json_encode('');
                     } catch (ServerException $e) {
                         return $e;
                     }
