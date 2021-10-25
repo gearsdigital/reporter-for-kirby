@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use KirbyReporter\Model\FormData;
 use KirbyReporter\Report\ReportResponse;
 use KirbyReporter\Vendor\Vendor;
 use PHPUnit\Framework\TestCase;
@@ -41,12 +42,13 @@ class GithubReportTest extends TestCase
 
         $reporter = new GithubReport($this->vendor);
         $reporter->setClient($client);
-        $response = $reporter->report([
+        $formData = new FormData([
             'title' => 'Lorem',
             'formFields' => [
                 'description' => 'Test',
             ],
         ]);
+        $response = $reporter->report($formData);
 
         // request
         $this->assertEquals("/repos/test/test-repo/issues", $mock->getLastRequest()->getUri()->getPath());
