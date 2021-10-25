@@ -3,6 +3,8 @@
 namespace KirbyReporter\Traits;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use KirbyReporter\Exception\ReportClientException;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -15,6 +17,7 @@ trait Request
 {
     private ?Client $client = null;
 
+    /** @throws ReportClientException */
     public final function post(string $url, array $body, array $headers): ResponseInterface
     {
         if (!$this->client) {
@@ -23,10 +26,14 @@ trait Request
 
         $headers['Content-Type'] = 'application/json';
 
-        return $this->client->post($url, [
-            'headers' => $headers,
-            'json' => $body,
-        ]);
+        try {
+            return $this->client->post($url, [
+                'headers' => $headers,
+                'json' => $body,
+            ]);
+        } catch (GuzzleException $e) {
+            throw new ReportClientException($e->getMessage(), $e->getCode());
+        }
     }
 
     public function setClient(Client $client): void

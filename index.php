@@ -1,8 +1,8 @@
 <?php
 
-use GuzzleHttp\Exception\ServerException;
 use Kirby\Cms\App as Kirby;
 use Kirby\Cms\Blueprint;
+use Kirby\Cms\Response;
 use KirbyReporter\Model\FormData;
 use KirbyReporter\Report\ReportClient;
 use KirbyReporter\Report\ReportTemplateParser;
@@ -64,29 +64,26 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
                         $client = new ReportClient($vendor);
 
                         return $client->createReport($formData)->toJson();
-                    } catch (ServerException $e) {
-                        return $e;
+                    } catch (Exception $e) {
+                        return new Response(json_encode($e->getMessage()), 'application/json', $e->getCode());
                     }
-                },
+                }
             ],
             [
                 'pattern' => 'reporter/report/preview',
                 'method' => 'post',
                 'action' => function () use ($url, $token, $user) {
-                    try {
-                        $formData = kirby()->request()->body()->data();
-                        if (isset($formData['formFields']['description'])) {
-                            $parsedTemplate = (new class {
-                                use ReportTemplateParser;
-                            })->parseTemplate($formData);
+                    $requestData = kirby()->request()->body()->data();
+                    $formData = new FormData($requestData);
+                    if (isset($formData->getFormFields()['description'])) {
+                        $parsedTemplate = (new class {
+                            use ReportTemplateParser;
+                        })->parseTemplate($formData->getFormFields());
 
-                            return json_encode($parsedTemplate);
-                        }
-
-                        return json_encode('');
-                    } catch (ServerException $e) {
-                        return $e;
+                        return json_encode($parsedTemplate);
                     }
+
+                    return json_encode('');
                 },
             ],
             [

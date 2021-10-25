@@ -9,8 +9,8 @@ class FormData
 
     public function __construct(array $formData)
     {
-        $this->setTitle($formData['title']);
-        $this->setFormFields($formData['formFields']);
+        $this->setTitle($formData['title'] ?? '');
+        $this->setFormFields($formData['formFields'] ?? ['formFields' => []]);
     }
 
     public function getTitle(): string
@@ -18,7 +18,7 @@ class FormData
         return $this->title;
     }
 
-    public function setTitle(string $title): void
+    private function setTitle(string $title): void
     {
         $this->title = $title;
     }
@@ -28,7 +28,7 @@ class FormData
         return $this->formFields;
     }
 
-    public function setFormFields(array $formFields): void
+    private function setFormFields(array $formFields): void
     {
         $this->formFields = $formFields;
     }

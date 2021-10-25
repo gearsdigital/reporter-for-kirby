@@ -130,37 +130,17 @@ export default {
 
       const request = this.$api.post('reporter/report', this.issue);
 
-      request.then(response => {
-        if (response.status >= 200 && response.status < 300) {
+      request.then(
+        response => {
           this.response = response;
+          this.loading = false;
           this.issue = {};
-          this.$store.dispatch("notification/success", ":)");
-        } else if (response.status === 401) {
-          this.errors.push(this.$t('reporter.form.error.authFailed'));
+        },
+        reject => {
+          this.errors.push(this.$t(reject));
+          this.loading = false;
           this.response = {};
-        } else if (response.status === 400) {
-          this.errors.push(response.message);
-          this.response = {};
-        } else if (response.status === 404) {
-          this.errors.push(this.$t('reporter.form.error.repoNotFound'));
-          this.response = {};
-        }
-        // 501 is defined by this appplication -> CreateVendor.php:70
-        else if (response.status === 501) {
-          this.errors.push(this.$t('reporter.form.error.platform.unsupported'));
-          this.response = {};
-        } else {
-          this.response = {};
-        }
-
-        this.loading = false;
-      });
-
-      request.catch((e) => {
-        this.errors.push(this.$t(e.message));
-        this.loading = false;
-        this.response = {};
-      });
+        });
     }
   }
 }

@@ -2,6 +2,7 @@
 
 namespace KirbyReporter\Vendor;
 
+use KirbyReporter\Exception\OptionNotFoundException;
 use KirbyReporter\Exception\UnsupportedPlatformException;
 
 /**
@@ -26,19 +27,19 @@ class Vendor
     private string $user;
 
     /**
-     * @throws UnsupportedPlatformException
+     * @throws UnsupportedPlatformException|OptionNotFoundException
      */
-    public function __construct(string $url, string $token, ?string $user = null)
+    public function __construct(?string $url, ?string $token, ?string $user = null)
     {
         $this->setUrl($url);
-        $this->setName($this->extractProviderName());
         $this->setToken($token);
+        $this->setName($this->extractProviderName());
         $this->setOwner($this->getPathSegment());
         $this->setRepository($this->getPathSegment(1));
         $this->setUser($user);
 
         if (!$this->isSupportedPlatform()) {
-            throw new UnsupportedPlatformException('reporter.form.error.platform.unsupported', 501);
+            throw new UnsupportedPlatformException('reporter.form.error.platform.unsupported', 400);
         }
     }
 
@@ -57,8 +58,13 @@ class Vendor
         return $this->url;
     }
 
-    private function setUrl(string $url): void
+    /** @throws OptionNotFoundException */
+    private function setUrl(?string $url): void
     {
+        if ($this->isDefined($url)) {
+            throw new OptionNotFoundException('reporter.form.error.optionNotFound.url', 400);
+        }
+
         $this->url = $url;
     }
 
@@ -67,8 +73,13 @@ class Vendor
         return $this->token;
     }
 
-    private function setToken(string $token): void
+    /** @throws OptionNotFoundException */
+    private function setToken(?string $token): void
     {
+        if ($this->isDefined($token)) {
+            throw new OptionNotFoundException('reporter.form.error.optionNotFound.token', 400);
+        }
+
         $this->token = $token;
     }
 
@@ -134,4 +145,12 @@ class Vendor
         return in_array($this->name, $this->providers);
     }
 
+    private function isDefined(?string $value): bool
+    {
+        if (empty($value)) {
+            return true;
+        }
+
+        return false;
+    }
 }
