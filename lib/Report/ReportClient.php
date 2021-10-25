@@ -5,6 +5,7 @@ namespace KirbyReporter\Report;
 use KirbyReporter\Client\BitbucketReport;
 use KirbyReporter\Client\GithubReport;
 use KirbyReporter\Client\GitlabReport;
+use KirbyReporter\Model\FormData;
 use KirbyReporter\Vendor\Vendor;
 
 /**
@@ -35,7 +36,7 @@ class ReportClient
         }
     }
 
-    public final function createReport(array $formData): ReportResponse
+    public final function createReport(FormData $formData): ReportResponse
     {
         return $this->client->report($formData);
     }

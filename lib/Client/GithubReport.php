@@ -2,6 +2,7 @@
 
 namespace KirbyReporter\Client;
 
+use KirbyReporter\Model\FormData;
 use KirbyReporter\Report\ReportTemplateParser;
 use KirbyReporter\Traits\Expander;
 use KirbyReporter\Traits\Request;
@@ -24,7 +25,7 @@ class GithubReport implements ReportInterface
         $this->vendor = $vendor;
     }
 
-    public final function report(array $reportData): ReportResponse
+    public final function report(FormData $reportData): ReportResponse
     {
         $url = $this->expandUrl($this->urlTemplate, [
             "user" => $this->vendor->owner,
@@ -32,8 +33,8 @@ class GithubReport implements ReportInterface
         ]);
 
         $reportData = [
-            "title" => $reportData['title'],
-            "body" =>  $this->parseTemplate($reportData),
+            "title" => $reportData->getTitle(),
+            "body" =>  $this->parseTemplate($reportData->getFormFields()),
         ];
 
         $header = ["Authorization" => "token ".$this->vendor->token];

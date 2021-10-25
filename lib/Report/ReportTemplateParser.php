@@ -8,9 +8,9 @@ trait ReportTemplateParser
 {
     private string $pluginName = 'gearsdigital/kirby-reporter';
 
-    public function parseTemplate(array $formData): string
+    public function parseTemplate(array $templateData): string
     {
-        return Tpl::load($this->getReportTemplate(), ['fields' => $formData['formFields']]);
+        return Tpl::load($this->getReportTemplate(), ['fields' => $templateData]);
     }
 
     private function getReportTemplate(): string

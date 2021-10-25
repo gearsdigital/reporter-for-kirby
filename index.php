@@ -3,6 +3,7 @@
 use GuzzleHttp\Exception\ServerException;
 use Kirby\Cms\App as Kirby;
 use Kirby\Cms\Blueprint;
+use KirbyReporter\Model\FormData;
 use KirbyReporter\Report\ReportClient;
 use KirbyReporter\Report\ReportTemplateParser;
 use KirbyReporter\Vendor\Vendor;
@@ -57,7 +58,8 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
                 'method' => 'post',
                 'action' => function () use ($url, $token, $user) {
                     try {
-                        $formData = kirby()->request()->body()->data();
+                        $requestData = kirby()->request()->body()->data();
+                        $formData = new FormData($requestData);
                         $vendor = new Vendor($url, $token, $user);
                         $client = new ReportClient($vendor);
 

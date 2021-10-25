@@ -2,9 +2,10 @@
 
 namespace KirbyReporter\Client;
 
+use KirbyReporter\Model\FormData;
 use KirbyReporter\Report\ReportInterface;
-use KirbyReporter\Report\ReportTemplateParser;
 use KirbyReporter\Report\ReportResponse;
+use KirbyReporter\Report\ReportTemplateParser;
 use KirbyReporter\Traits\Expander;
 use KirbyReporter\Traits\Request;
 use KirbyReporter\Vendor\Vendor;
@@ -24,7 +25,7 @@ class BitbucketReport implements ReportInterface
         $this->vendor = $vendor;
     }
 
-    public final function report(array $reportData): ReportResponse
+    public final function report(FormData $reportData): ReportResponse
     {
         $url = $this->expandUrl($this->urlTemplate, [
             "user" => $this->vendor->owner,
@@ -32,8 +33,8 @@ class BitbucketReport implements ReportInterface
         ]);
 
         $reportData = [
-            "title" => $reportData['title'],
-            "description" => $this->parseTemplate($reportData),
+            "title" => $reportData->getTitle(),
+            "description" => $this->parseTemplate($reportData->getFormFields()),
         ];
 
         $header = ["Authorization" => "Basic ".$this->getBasicAuth()];
