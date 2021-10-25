@@ -1,7 +1,3 @@
 ## Issue Template
 
-<?php
-if (isset($fields)): ?>
-    <?= $fields['description'] ?? ''; ?>
-<?php
-endif;
+<?php if (isset($fields)): ?><?= $fields['description'] ?? ''; ?><?php endif;?>

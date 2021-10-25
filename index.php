@@ -80,11 +80,10 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
                             use ReportTemplateParser;
                         })->parseTemplate($formData->getFormFields());
 
-                        return json_encode($parsedTemplate);
+                        return new Response(json_encode(trim($parsedTemplate)), 'application/json');
                     }
-
-                    return json_encode('');
-                },
+                    return new Response(null, 'application/json', 204);
+                }
             ],
             [
                 'pattern' => 'reporter/fields',
