@@ -23,15 +23,15 @@ class ReportClient
 
     public function __construct(Vendor $vendor)
     {
-        if ($vendor->name == 'bitbucket') {
+        if ($vendor->getName() == 'bitbucket') {
             $this->client = new BitbucketReport($vendor);
         }
 
-        if ($vendor->name == 'github') {
+        if ($vendor->getName() == 'github') {
             $this->client = new GithubReport($vendor);
         }
 
-        if ($vendor->name == 'gitlab') {
+        if ($vendor->getName() == 'gitlab') {
             $this->client = new GitlabReport($vendor);
         }
     }

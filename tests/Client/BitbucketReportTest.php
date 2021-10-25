@@ -22,11 +22,7 @@ class BitbucketReportTest extends TestCase
 
     public function setUp(): void
     {
-        $this->vendor = $this->createMock(Vendor::class);
-        $this->vendor->owner = 'test';
-        $this->vendor->user = 'test-dev';
-        $this->vendor->token = '1234567890';
-        $this->vendor->repository = 'test-repo';
+        $this->vendor = new Vendor('https://bitbucket.org/test/test-repo', '1234567890', 'test-dev');
 
         $this->response = json_encode([
             "id" => 46,

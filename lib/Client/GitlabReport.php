@@ -28,8 +28,8 @@ class GitlabReport implements ReportInterface
     public final function report(FormData $reportData): ReportResponse
     {
         $url = $this->expandUrl($this->urlTemplate, [
-            "user" => $this->vendor->owner,
-            "repo" => $this->vendor->repository,
+            "user" => $this->vendor->getOwner(),
+            "repo" => $this->vendor->getRepository(),
         ]);
 
         $reportData = [
@@ -37,7 +37,7 @@ class GitlabReport implements ReportInterface
             "description" => $this->parseTemplate($reportData->getFormFields()),
         ];
 
-        $header = ["Private-Token" => $this->vendor->token];
+        $header = ["Private-Token" => $this->vendor->getToken()];
         $request = $this->post($url, $reportData, $header);
         $body = json_decode($request->getBody()->getContents(), true);
 

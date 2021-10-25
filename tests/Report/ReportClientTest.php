@@ -17,40 +17,32 @@ class ReportClientTest extends TestCase
 {
     public function test_create_bitbucket_client()
     {
-        $stub = $this->createMock(Vendor::class);
-        $stub->name = "bitbucket";
-
-        $client = new ReportClient($stub);
+        $vendor = new Vendor('https://bitbucket.org/test/test-repo', '1234567890', 'test-dev');
+        $client = new ReportClient($vendor);
         $this->assertInstanceOf(BitbucketReport::class, $client->client);
         $this->assertTrue(method_exists($client->client, 'report'));
     }
 
     public function test_create_gitlab_client()
     {
-        $stub = $this->createMock(Vendor::class);
-        $stub->name = "gitlab";
-
-        $client = new ReportClient($stub);
+        $vendor = new Vendor('https://gitlab.org/test/test-repo', '1234567890');
+        $client = new ReportClient($vendor);
         $this->assertInstanceOf(GitlabReport::class, $client->client);
         $this->assertTrue(method_exists($client->client, 'report'));
     }
 
     public function test_create_github_client()
     {
-        $stub = $this->createMock(Vendor::class);
-        $stub->name = "github";
-
-        $client = new ReportClient($stub);
+        $vendor = new Vendor('https://github.org/test/test-repo', '1234567890');
+        $client = new ReportClient($vendor);
         $this->assertInstanceOf(GithubReport::class, $client->client);
         $this->assertTrue(method_exists($client->client, 'report'));
     }
 
     public function test_has_report_method()
     {
-        $stub = $this->createMock(Vendor::class);
-        $stub->name = "github";
-
-        $client = new ReportClient($stub);
+        $vendor = new Vendor('https://github.org/test/test-repo', '1234567890');
+        $client = new ReportClient($vendor);
         $this->assertTrue(method_exists($client, 'createReport'));
     }
 }

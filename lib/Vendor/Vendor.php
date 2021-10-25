@@ -2,7 +2,7 @@
 
 namespace KirbyReporter\Vendor;
 
-use Exception;
+use KirbyReporter\Exception\UnsupportedPlatformException;
 
 /**
  *
@@ -13,36 +13,93 @@ class Vendor
 {
     use Vendors;
 
-    public string $url;
+    private string $url;
 
-    public string $name;
+    private string $name;
 
-    public string $owner;
+    private string $token;
 
-    public string $user;
+    private string $owner;
 
-    public string $token;
+    private string $repository;
 
-    public string $repository;
+    private string $user;
 
+    /**
+     * @throws UnsupportedPlatformException
+     */
     public function __construct(string $url, string $token, ?string $user = null)
     {
-        $this->url = $url;
-        $this->token = $token;
-        $this->name = $this->extractProviderName();
-        $this->owner = $this->getPathSegment();
-        $this->repository = $this->getPathSegment(1);
-
+        $this->setUrl($url);
+        $this->setName($this->extractProviderName());
+        $this->setToken($token);
+        $this->setOwner($this->getPathSegment());
+        $this->setRepository($this->getPathSegment(1));
         $this->setUser($user);
 
         if (!$this->isSupportedPlatform()) {
-            throw new Exception('reporter.form.error.platform.unsupported', 501);
+            throw new UnsupportedPlatformException('reporter.form.error.platform.unsupported', 501);
         }
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    private function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    private function setUrl(string $url): void
+    {
+        $this->url = $url;
+    }
+
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    private function setToken(string $token): void
+    {
+        $this->token = $token;
+    }
+
+    public function getOwner(): string
+    {
+        return $this->owner;
+    }
+
+    private function setOwner(string $owner): void
+    {
+        $this->owner = $owner;
+    }
+
+    public function getRepository(): string
+    {
+        return $this->repository;
+    }
+
+    private function setRepository(string $repository): void
+    {
+        $this->repository = $repository;
     }
 
     private function setUser(?string $user): void
     {
-        $this->user = $user == null ? $this->owner : $user;
+        $this->user = $user == null ? $this->getOwner() : $user;
+    }
+
+    public function getUser(): string
+    {
+        return $this->user;
     }
 
     private function extractProviderName(): ?string

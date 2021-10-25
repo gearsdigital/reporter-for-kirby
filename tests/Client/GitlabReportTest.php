@@ -22,12 +22,7 @@ class GitlabReportTest extends TestCase
 
     public function setUp(): void
     {
-        $this->vendor = $this->createMock(Vendor::class);
-        $this->vendor->owner = 'test';
-        $this->vendor->user = 'test-dev';
-        $this->vendor->token = '1234567890';
-        $this->vendor->repository = 'test-repo';
-
+        $this->vendor = new Vendor('https://gitlab.org/test/test-repo', '1234567890');
         $this->response = json_encode([
             "iid" => 46,
             "web_url" => "https://gitlab.com/test/test-repo/issues/46",

@@ -28,8 +28,8 @@ class BitbucketReport implements ReportInterface
     public final function report(FormData $reportData): ReportResponse
     {
         $url = $this->expandUrl($this->urlTemplate, [
-            "user" => $this->vendor->owner,
-            "repo" => $this->vendor->repository,
+            "user" => $this->vendor->getOwner(),
+            "repo" => $this->vendor->getRepository(),
         ]);
 
         $reportData = [
@@ -50,6 +50,6 @@ class BitbucketReport implements ReportInterface
 
     private function getBasicAuth(): string
     {
-        return base64_encode($this->vendor->user.':'.$this->vendor->token);
+        return base64_encode($this->vendor->getUser().':'.$this->vendor->getToken());
     }
 }
