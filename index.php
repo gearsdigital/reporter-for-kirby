@@ -58,11 +58,19 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
                 'method' => 'post',
                 'action' => function () use ($url, $token, $user) {
                     try {
+                        // get body from post request
                         $requestData = kirby()->request()->body()->data();
+
+                        // create formdata model (to ensure shape of form data)
                         $formData = new FormData($requestData);
+
+                        // detect the current vendor based on given config url
                         $vendor = new Vendor($url, $token, $user);
+
+                        // create a report client which is responsible for everything related to the detected vendor
                         $client = new ReportClient($vendor);
 
+                        // creates a report based on created client
                         return $client->createReport($formData)->toJson();
                     } catch (Exception $e) {
                         return new Response(json_encode($e->getMessage()), 'application/json', $e->getCode());
