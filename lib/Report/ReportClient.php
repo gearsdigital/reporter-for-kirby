@@ -5,7 +5,6 @@ namespace KirbyReporter\Report;
 use KirbyReporter\Client\BitbucketReport;
 use KirbyReporter\Client\GithubReport;
 use KirbyReporter\Client\GitlabReport;
-use KirbyReporter\Exception\ReportClientException;
 use KirbyReporter\Model\FormData;
 use KirbyReporter\Vendor\Vendor;
 

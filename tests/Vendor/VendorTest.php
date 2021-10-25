@@ -3,6 +3,7 @@
  * @noinspection MissingReturnTypeInspection
  * @noinspection MethodShouldBeFinalInspection
  */
+
 namespace KirbyReporter\Mixins;
 
 use KirbyReporter\Exception\OptionNotFoundException;

@@ -3,11 +3,11 @@
 namespace KirbyReporter\Client;
 
 use KirbyReporter\Model\FormData;
+use KirbyReporter\Report\ReportInterface;
+use KirbyReporter\Report\ReportResponse;
 use KirbyReporter\Report\ReportTemplateParser;
 use KirbyReporter\Traits\Expander;
 use KirbyReporter\Traits\Request;
-use KirbyReporter\Report\ReportInterface;
-use KirbyReporter\Report\ReportResponse;
 use KirbyReporter\Vendor\Vendor;
 
 class GithubReport implements ReportInterface

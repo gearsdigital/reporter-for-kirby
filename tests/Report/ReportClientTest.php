@@ -74,6 +74,15 @@ class ReportClientTest extends TestCase
         $this->test_exeption($statusCode, 'reporter.form.error.apiCommunicationError');
     }
 
+    public function statusCodeProvider(): array
+    {
+        return [
+            [405],
+            [500],
+            [501],
+        ];
+    }
+
     private function test_exeption(int $code, string $message)
     {
         $vendor = new Vendor('https://bitbucket.org/test/test-repo', '1234567890');
@@ -90,15 +99,6 @@ class ReportClientTest extends TestCase
         $this->expectExceptionCode($code);
 
         $reporter->report($formData);
-    }
-
-    public function statusCodeProvider(): array
-    {
-        return [
-            [405],
-            [500],
-            [501],
-        ];
     }
 }
 
