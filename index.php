@@ -2,20 +2,23 @@
 
 use Kirby\Cms\App as Kirby;
 use Kirby\Cms\Blueprint;
-use KirbyReporter\Client\CreateClient;
-use KirbyReporter\Client\CreateVendor;
-use KirbyReporter\Client\ErrorResponse;
-use KirbyReporter\Client\PayloadInterceptor;
+use Kirby\Cms\Response;
+use KirbyReporter\Model\FormData;
+use KirbyReporter\Report\ReportClient;
+use KirbyReporter\Report\ReportTemplateParser;
+use KirbyReporter\Vendor\Vendor;
 
 @include_once __DIR__.'/vendor/autoload.php';
 
-if (empty(option('kirby-reporter.enabled', false)) === true) {
+if (empty(option('kirby-reporter.enabled', false)) === true
+    // this is only neccessary to run tests in CI env
+    && !getenv("KIRBY_REPORTER_TEST")) {
     return false;
 }
 
 $url = option('kirby-reporter.repository');
 $token = option('kirby-reporter.token');
-$bitbucketUser = option('kirby-reporter.bitbucket.user');
+$user = option('kirby-reporter.bitbucket.user');
 
 Kirby::plugin('gearsdigital/kirby-reporter', [
     'areas' => [
@@ -53,27 +56,42 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
             [
                 'pattern' => 'reporter/report',
                 'method' => 'post',
-                'action' => function () use ($url, $token, $bitbucketUser) {
+                'action' => function () use ($url, $token, $user) {
                     try {
-                        $isPreview = get('preview');
-                        $requestBody = kirby()->request()->body()->data();
-                        $vendor = new CreateVendor($url);
-                        $client = new CreateClient($vendor, $token, $bitbucketUser);
-                        $payload = new PayloadInterceptor($requestBody);
+                        // get body from post request
+                        $requestData = kirby()->request()->body()->data();
 
-                        if ($isPreview) {
-                            return json_encode($payload->renderIssueTemplate());
-                        }
+                        // create formdata model (to ensure shape of form data)
+                        $formData = new FormData($requestData);
 
-                        $response = $client->api->createIssue($payload->get());
+                        // detect the current vendor based on given config url
+                        $vendor = new Vendor($url, $token, $user);
 
-                        return json_encode($response);
+                        // create a report client which is responsible for everything related to the detected vendor
+                        $client = new ReportClient($vendor);
+
+                        // creates a report based on created client
+                        return $client->createReport($formData)->toJson();
                     } catch (Exception $e) {
-                        $errorResponse = new ErrorResponse($e);
-
-                        return json_encode($errorResponse);
+                        return new Response(json_encode($e->getMessage()), 'application/json', $e->getCode());
                     }
-                },
+                }
+            ],
+            [
+                'pattern' => 'reporter/report/preview',
+                'method' => 'post',
+                'action' => function () use ($url, $token, $user) {
+                    $requestData = kirby()->request()->body()->data();
+                    $formData = new FormData($requestData);
+                    if (isset($formData->getFormFields()['description'])) {
+                        $parsedTemplate = (new class {
+                            use ReportTemplateParser;
+                        })->parseTemplate($formData->getFormFields());
+
+                        return new Response(json_encode(trim($parsedTemplate)), 'application/json');
+                    }
+                    return new Response(null, 'application/json', 204);
+                }
             ],
             [
                 'pattern' => 'reporter/fields',

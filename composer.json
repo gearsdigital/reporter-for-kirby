@@ -18,16 +18,15 @@
         "ext-json": "*",
         "getkirby/composer-installer": "^1.2",
         "ql/uri-template": "^1.1",
-        "guzzlehttp/guzzle": "~7.0"
+        "guzzlehttp/guzzle": "~7.4.0"
     },
     "config": {
         "optimize-autoloader": true
     },
     "require-dev": {
-        "phpunit/phpunit": "^8",
-        "spatie/phpunit-watcher": "dev-master"
+        "phpunit/phpunit": "^9.5.10"
     },
     "scripts": {
-        "test": "phpunit --bootstrap vendor/autoload.php tests"
+        "test": "phpunit --bootstrap tests/bootstrap.php tests"
     }
 }
