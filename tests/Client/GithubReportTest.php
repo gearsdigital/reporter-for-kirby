@@ -43,7 +43,7 @@ class GithubReportTest extends TestCase
                 'description' => 'Test',
             ],
         ]);
-        $response = $reporter->report($formData);
+        $response = $reporter->report($formData, 'parsedTemplate');
 
         // request
         $this->assertEquals("/repos/test/test-repo/issues", $mock->getLastRequest()->getUri()->getPath());

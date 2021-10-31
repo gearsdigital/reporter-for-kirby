@@ -4,8 +4,6 @@
  * @noinspection MethodShouldBeFinalInspection
  */
 
-namespace KirbyReporter\Mixins;
-
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -98,7 +96,7 @@ class ReportClientTest extends TestCase
         $this->expectExceptionMessage($message);
         $this->expectExceptionCode($code);
 
-        $reporter->report($formData);
+        $reporter->report($formData, 'parsedTemplate');
     }
 }
 

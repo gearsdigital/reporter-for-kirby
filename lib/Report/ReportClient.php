@@ -16,6 +16,8 @@ use KirbyReporter\Vendor\Vendor;
  */
 class ReportClient
 {
+    use ReportTemplateParser;
+
     /**
      * @var BitbucketReport|GithubReport|GitlabReport
      */
@@ -38,6 +40,8 @@ class ReportClient
 
     public final function createReport(FormData $formData): ReportResponse
     {
-        return $this->client->report($formData);
+        $parsedTemplate = $this->parseTemplate($formData->getFormFields());
+
+        return $this->client->report($formData, $parsedTemplate);
     }
 }
