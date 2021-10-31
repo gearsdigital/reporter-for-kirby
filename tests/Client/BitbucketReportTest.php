@@ -50,7 +50,7 @@ class BitbucketReportTest extends TestCase
                 'description' => 'Test',
             ],
         ]);
-        $response = $reporter->report($formData);
+        $response = $reporter->report($formData, 'parsedTemplate');
 
         // request
         $this->assertEquals("/2.0/repositories/test/test-repo/issues", $mock->getLastRequest()->getUri()->getPath());

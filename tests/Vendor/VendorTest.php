@@ -4,8 +4,6 @@
  * @noinspection MethodShouldBeFinalInspection
  */
 
-namespace KirbyReporter\Mixins;
-
 use KirbyReporter\Exception\OptionNotFoundException;
 use KirbyReporter\Exception\UnsupportedPlatformException;
 use KirbyReporter\Vendor\Vendor;

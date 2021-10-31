@@ -43,7 +43,7 @@ class GitlabReportTest extends TestCase
                 'description' => 'Test',
             ],
         ]);
-        $response = $reporter->report($formData);
+        $response = $reporter->report($formData, 'parsedTemplate');
 
         // request
         $this->assertEquals("/api/v4/projects/test%2Ftest-repo/issues", $mock->getLastRequest()->getUri()->getPath());
