@@ -1,6 +1,6 @@
 {
-    "name": "gearsdigital/kirby-reporter",
-    "description": "Report issues with ease.",
+    "name": "gearsdigital/reporter-for-kirby",
+    "description": "Gather feedback directly out of the Panel! Enable your editors or clients to submit tasks, bugs and ideas either straight to your issue tracker or by E-Mail.",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [
