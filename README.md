@@ -1,4 +1,4 @@
-# Kirby Issue Reporter
+# Reporter for Kirby
 
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/gearsdigital/reporter-for-kirby.svg)](https://codeclimate.com/github/gearsdigital/reporter-for-kirby)
 [![Codefactor](https://img.shields.io/codefactor/grade/github/gearsdigital/reporter-for-kirby.svg)](https://www.codefactor.io/repository/github/gearsdigital/reporter-for-kirby)
