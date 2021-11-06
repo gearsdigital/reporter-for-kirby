@@ -1,5 +1,6 @@
 # OS files
 .DS_Store
+*.iml
 
 # npm modules
 /node_modules
