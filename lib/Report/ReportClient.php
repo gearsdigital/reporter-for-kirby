@@ -5,8 +5,10 @@ namespace KirbyReporter\Report;
 use KirbyReporter\Client\BitbucketReport;
 use KirbyReporter\Client\GithubReport;
 use KirbyReporter\Client\GitlabReport;
+use KirbyReporter\Client\MailReport;
 use KirbyReporter\Model\FormData;
-use KirbyReporter\Vendor\Vendor;
+use KirbyReporter\Vendor\IssueTracker;
+use KirbyReporter\Vendor\Mail;
 
 /**
  * Defines a single report client.
@@ -18,30 +20,39 @@ class ReportClient
 {
     use ReportTemplateParser;
 
-    /**
-     * @var BitbucketReport|GithubReport|GitlabReport
-     */
-    public $client;
+    public GithubReport|GitlabReport|BitbucketReport|MailReport $client;
+    private IssueTracker|Mail $vendor;
 
-    public function __construct(Vendor $vendor)
+    public function __construct(IssueTracker|Mail $vendor)
     {
-        if ($vendor->getName() == 'bitbucket') {
-            $this->client = new BitbucketReport($vendor);
+        $this->vendor = $vendor;
+
+        if ($this->vendor->getName() == 'bitbucket') {
+            $this->client = new BitbucketReport($this->vendor);
         }
 
-        if ($vendor->getName() == 'github') {
-            $this->client = new GithubReport($vendor);
+        if ($this->vendor->getName() == 'github') {
+            $this->client = new GithubReport($this->vendor);
         }
 
-        if ($vendor->getName() == 'gitlab') {
-            $this->client = new GitlabReport($vendor);
+        if ($this->vendor->getName() == 'gitlab') {
+            $this->client = new GitlabReport($this->vendor);
+        }
+
+        if ($this->vendor->getName() == 'mail') {
+            $this->client = new MailReport($this->vendor);
         }
     }
 
     public final function createReport(FormData $formData): ReportResponse
     {
-        $parsedTemplate = $this->parseTemplate($formData->getFormFields());
+        // just pass form data, mail template is loaded automatically
+        if ($this->vendor->getName() == 'mail') {
+            return $this->client->report($formData, null);
+        }
 
-        return $this->client->report($formData, $parsedTemplate);
+        // we need to parse the reporer template first because we need to send a plain 'string'
+        // to external APIs
+        return $this->client->report($formData, $this->parseTemplate($formData->getFormFields()));
     }
 }

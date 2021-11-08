@@ -60,11 +60,19 @@ export default {
       return this.loading ? 'loader' : "check";
     },
     successMessage() {
-      return this.$t('reporter.form.success', {issueLink: this.issueLink})
+      console.log(this.issueLink);
+      if (this.issueLink) {
+        return this.$t('reporter.form.success', {issueLink: this.issueLink})
+      }
+      return this.$t('reporter.form.mail.success');
     },
     issueLink() {
       const issueLink = this.response.issueUrl;
       const issueId = this.response.issueId;
+
+      if (!issueId) {
+        return null;
+      }
 
       return this.$t('reporter.form.issue.link', {issueLink, issueId})
     }

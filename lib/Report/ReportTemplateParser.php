@@ -6,7 +6,7 @@ use Kirby\Toolkit\Tpl;
 
 trait ReportTemplateParser
 {
-    private string $pluginName = 'gearsdigital/kirby-reporter';
+    private string $pluginName = 'gearsdigital/reporter-for-kirby';
 
     public function parseTemplate(array $templateData): string
     {

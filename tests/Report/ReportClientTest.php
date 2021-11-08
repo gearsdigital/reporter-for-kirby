@@ -11,10 +11,12 @@ use GuzzleHttp\Psr7\Response;
 use KirbyReporter\Client\BitbucketReport;
 use KirbyReporter\Client\GithubReport;
 use KirbyReporter\Client\GitlabReport;
+use KirbyReporter\Client\MailReport;
 use KirbyReporter\Exception\ReportClientException;
 use KirbyReporter\Model\FormData;
 use KirbyReporter\Report\ReportClient;
-use KirbyReporter\Vendor\Vendor;
+use KirbyReporter\Vendor\IssueTracker;
+use KirbyReporter\Vendor\Mail;
 use PHPUnit\Framework\TestCase;
 
 class ReportClientTest extends TestCase
@@ -22,7 +24,7 @@ class ReportClientTest extends TestCase
 
     public function test_create_bitbucket_client()
     {
-        $vendor = new Vendor('https://bitbucket.org/test/test-repo', '1234567890', 'test-dev');
+        $vendor = new IssueTracker('https://bitbucket.org/test/test-repo', '1234567890', 'test-dev');
         $client = new ReportClient($vendor);
         $this->assertInstanceOf(BitbucketReport::class, $client->client);
         $this->assertTrue(method_exists($client->client, 'report'));
@@ -30,7 +32,7 @@ class ReportClientTest extends TestCase
 
     public function test_create_gitlab_client()
     {
-        $vendor = new Vendor('https://gitlab.com/test/test-repo', '1234567890');
+        $vendor = new IssueTracker('https://gitlab.com/test/test-repo', '1234567890');
         $client = new ReportClient($vendor);
         $this->assertInstanceOf(GitlabReport::class, $client->client);
         $this->assertTrue(method_exists($client->client, 'report'));
@@ -38,15 +40,23 @@ class ReportClientTest extends TestCase
 
     public function test_create_github_client()
     {
-        $vendor = new Vendor('https://github.com/test/test-repo', '1234567890');
+        $vendor = new IssueTracker('https://github.com/test/test-repo', '1234567890');
         $client = new ReportClient($vendor);
         $this->assertInstanceOf(GithubReport::class, $client->client);
         $this->assertTrue(method_exists($client->client, 'report'));
     }
 
+    public function test_create_mail_client()
+    {
+        $vendor = new Mail('mail@example.com', 'user@example.com', 'my-subject');
+        $client = new ReportClient($vendor);
+        $this->assertInstanceOf(MailReport::class, $client->client);
+        $this->assertTrue(method_exists($client->client, 'report'));
+    }
+
     public function test_has_report_method()
     {
-        $vendor = new Vendor('https://github.com/test/test-repo', '1234567890');
+        $vendor = new IssueTracker('https://github.com/test/test-repo', '1234567890');
         $client = new ReportClient($vendor);
         $this->assertTrue(method_exists($client, 'createReport'));
     }
@@ -83,7 +93,7 @@ class ReportClientTest extends TestCase
 
     private function test_exeption(int $code, string $message)
     {
-        $vendor = new Vendor('https://bitbucket.org/test/test-repo', '1234567890');
+        $vendor = new IssueTracker('https://bitbucket.org/test/test-repo', '1234567890');
         $mock = new MockHandler([new Response($code)]);
         $handlerStack = HandlerStack::create($mock);
         $client = new Client(['handler' => $handlerStack]);

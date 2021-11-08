@@ -7,7 +7,7 @@ use KirbyReporter\Report\ReportInterface;
 use KirbyReporter\Report\ReportResponse;
 use KirbyReporter\Traits\Expander;
 use KirbyReporter\Traits\Request;
-use KirbyReporter\Vendor\Vendor;
+use KirbyReporter\Vendor\IssueTracker;
 
 class BitbucketReport implements ReportInterface
 {
@@ -16,14 +16,14 @@ class BitbucketReport implements ReportInterface
 
     private string $urlTemplate = "https://api.bitbucket.org/2.0/repositories/{user}/{repo}/issues";
 
-    private Vendor $vendor;
+    private IssueTracker $vendor;
 
-    public function __construct(Vendor $vendor)
+    public function __construct(IssueTracker $vendor)
     {
         $this->vendor = $vendor;
     }
 
-    public final function report(FormData $reportData, string $parsedTemplate): ReportResponse
+    public final function report(FormData $reportData, ?string $templateData): ReportResponse
     {
         $url = $this->expandUrl($this->urlTemplate, [
             "user" => $this->vendor->getOwner(),
@@ -32,7 +32,7 @@ class BitbucketReport implements ReportInterface
 
         $reportData = [
             "title" => $reportData->getTitle(),
-            "description" => $parsedTemplate,
+            "description" => $templateData,
         ];
 
         $header = ["Authorization" => "Basic ".$this->getBasicAuth()];

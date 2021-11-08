@@ -12,17 +12,17 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use KirbyReporter\Model\FormData;
 use KirbyReporter\Report\ReportResponse;
-use KirbyReporter\Vendor\Vendor;
+use KirbyReporter\Vendor\IssueTracker;
 use PHPUnit\Framework\TestCase;
 
 class BitbucketReportTest extends TestCase
 {
-    private Vendor $vendor;
+    private IssueTracker $vendor;
     private string $response;
 
     public function setUp(): void
     {
-        $this->vendor = new Vendor('https://bitbucket.org/test/test-repo', '1234567890', 'test-dev');
+        $this->vendor = new IssueTracker('https://bitbucket.org/test/test-repo', '1234567890', 'test-dev');
 
         $this->response = json_encode([
             "id" => 46,

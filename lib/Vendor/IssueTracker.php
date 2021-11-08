@@ -10,7 +10,7 @@ use KirbyReporter\Exception\UnsupportedPlatformException;
  * @package KirbyReporter
  * @author Steffen Giers <steffen.giers@gmail.com>
  */
-class Vendor
+class IssueTracker implements VendorInterface
 {
     use Vendors;
 
@@ -43,7 +43,7 @@ class Vendor
         }
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }

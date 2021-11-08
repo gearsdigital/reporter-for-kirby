@@ -6,21 +6,19 @@ use Kirby\Cms\Response;
 use KirbyReporter\Model\FormData;
 use KirbyReporter\Report\ReportClient;
 use KirbyReporter\Report\ReportTemplateParser;
-use KirbyReporter\Vendor\Vendor;
+use KirbyReporter\Vendor\IssueTracker;
+use KirbyReporter\Vendor\Mail;
 
 @include_once __DIR__.'/vendor/autoload.php';
 
-if (empty(option('kirby-reporter.enabled', false)) === true
+if (empty(option('gearsdigital.reporter-for-kirby.enabled', false)) === true
     // this is only neccessary to run tests in CI env
-    && !getenv("KIRBY_REPORTER_TEST")) {
+    && !getenv("KIRBY_REPORTER_TEST")
+) {
     return false;
 }
 
-$url = option('kirby-reporter.repository');
-$token = option('kirby-reporter.token');
-$user = option('kirby-reporter.bitbucket.user');
-
-Kirby::plugin('gearsdigital/kirby-reporter', [
+Kirby::plugin('gearsdigital/reporter-for-kirby', [
     'areas' => [
         'reporter' => function () {
             return [
@@ -47,6 +45,8 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
     ],
     'templates' => [
         'reporter' => __DIR__.'/templates/reporter.php',
+        'emails/report' => __DIR__.'/templates/emails/report.html.php',
+        'emails/reporttext' => __DIR__.'/templates/emails/report.text.php',
     ],
     'sections' => [
         'reporter' => [],
@@ -56,7 +56,7 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
             [
                 'pattern' => 'reporter/report',
                 'method' => 'post',
-                'action' => function () use ($url, $token, $user) {
+                'action' => function () {
                     try {
                         // get body from post request
                         $requestData = kirby()->request()->body()->data();
@@ -64,13 +64,26 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
                         // create formdata model (to ensure shape of form data)
                         $formData = new FormData($requestData);
 
-                        // detect the current vendor based on given config url
-                        $vendor = new Vendor($url, $token, $user);
+                        // Issue Tracker Report
+                        if (is_array(option('gearsdigital.reporter-for-kirby.repository'))) {
+                            $url = option('gearsdigital.reporter-for-kirby.repository.url');
+                            $token = option('gearsdigital.reporter-for-kirby.repository.token');
+                            $user = option('gearsdigital.reporter-for-kirby.repository.user');
+                            $tracker = new IssueTracker($url, $token, $user);
+                            $client = new ReportClient($tracker);
 
-                        // create a report client which is responsible for everything related to the detected vendor
-                        $client = new ReportClient($vendor);
+                            return $client->createReport($formData)->toJson();
+                        }
 
-                        // creates a report based on created client
+                        // Mail Report
+                        $from = option('gearsdigital.reporter-for-kirby.mail.from');
+                        $to = option('gearsdigital.reporter-for-kirby.mail.to');
+                        $subject = option('gearsdigital.reporter-for-kirby.mail.subject');
+                        $type = option('gearsdigital.reporter-for-kirby.mail.type');
+
+                        $mail = new Mail($from, $to, $subject, $type);
+                        $client = new ReportClient($mail);
+
                         return $client->createReport($formData)->toJson();
                     } catch (Exception $e) {
                         return new Response(json_encode($e->getMessage()), 'application/json', $e->getCode());
@@ -80,7 +93,7 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
             [
                 'pattern' => 'reporter/report/preview',
                 'method' => 'post',
-                'action' => function () use ($url, $token, $user) {
+                'action' => function () {
                     $requestData = kirby()->request()->body()->data();
                     $formData = new FormData($requestData);
                     if (isset($formData->getFormFields()['description'])) {
@@ -90,6 +103,7 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
 
                         return new Response(json_encode(trim($parsedTemplate)), 'application/json');
                     }
+
                     return new Response(null, 'application/json', 204);
                 }
             ],
@@ -113,6 +127,7 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
             'reporter.tab.preview.empty' => 'Nothing to preview',
             'reporter.form.field.title' => 'Title',
             'reporter.form.success' => 'Your problem has been reported successfully and is handled under case number: {issueLink}',
+            'reporter.form.mail.success' => 'Your problem has been reported successfully.',
             'reporter.form.issue.link' => '<a href="{issueLink}">#{issueId}</a>',
             'reporter.form.button.save' => 'Report Issue',
             'reporter.form.error.title' => 'You need to add at least a title.',
@@ -130,6 +145,7 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
             'reporter.form.field.title' => 'Titel',
             'reporter.tab.preview.empty' => 'Keine Vorschau verfügbar',
             'reporter.form.success' => 'Ihr Bericht wurde erfolgreich übertragen und wird unter der Fallnummer {issueLink} behandelt.',
+            'reporter.form.mail.success' => 'Ihr Bericht wurde erfolgreich übertragen.',
             'reporter.form.issue.link' => '<a href="{issueLink}">{issueId}</a>',
             'reporter.form.button.save' => 'Fehler melden',
             'reporter.form.error.title' => 'Es muss mindestens ein Titel eingegeben werden.',
@@ -147,6 +163,7 @@ Kirby::plugin('gearsdigital/kirby-reporter', [
             'reporter.tab.preview.empty' => 'Önizleme yapacak bir şey yok',
             'reporter.form.field.title' => 'Başlık',
             'reporter.form.success' => 'Hata başarıyla bildirildi ve ilgili konu numarası altında ele alındı: {issueLink}',
+            'reporter.form.mail.success' => 'Hata başarıyla bildirildi.',
             'reporter.form.issue.link' => '<a href="{issueLink}">#{issueId}</a>',
             'reporter.form.button.save' => 'Hata Raporla',
             'reporter.form.error.title' => 'En azından bir başlık eklemelisin.',
