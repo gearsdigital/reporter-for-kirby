@@ -6,15 +6,15 @@
 
 use KirbyReporter\Exception\OptionNotFoundException;
 use KirbyReporter\Exception\UnsupportedPlatformException;
-use KirbyReporter\Vendor\Vendor;
+use KirbyReporter\Vendor\IssueTracker;
 use PHPUnit\Framework\TestCase;
 
-class VendorTest extends TestCase
+class IssueTrackerTest extends TestCase
 {
 
     public function test_create_vendor()
     {
-        $vendor = new Vendor('https://github.com/gearsdigital/kirby-reporter', 'a3bKJSHp3Er3VuyP6Wc');
+        $vendor = new IssueTracker('https://github.com/gearsdigital/kirby-reporter', 'a3bKJSHp3Er3VuyP6Wc');
         $this->assertEquals('github', $vendor->getName());
         $this->assertEquals('gearsdigital', $vendor->getUser());
         $this->assertEquals('gearsdigital', $vendor->getOwner());
@@ -28,7 +28,7 @@ class VendorTest extends TestCase
         $this->expectException(UnsupportedPlatformException::class);
         $this->expectExceptionMessage('reporter.form.error.platform.unsupported');
         $this->expectExceptionCode(400);
-        new Vendor('https://lorem.com/gearsdigital/kirby-reporter', 'a3bKJSHp3Er3VuyP6Wc');
+        new IssueTracker('https://lorem.com/gearsdigital/kirby-reporter', 'a3bKJSHp3Er3VuyP6Wc');
     }
 
     public function test_exception_option_url_not_found()
@@ -36,7 +36,7 @@ class VendorTest extends TestCase
         $this->expectException(OptionNotFoundException::class);
         $this->expectExceptionMessage('reporter.form.error.optionNotFound.url');
         $this->expectExceptionCode(400);
-        new Vendor(null, 'a3bKJSHp3Er3VuyP6Wc');
+        new IssueTracker(null, 'a3bKJSHp3Er3VuyP6Wc');
     }
 
     public function test_exception_option_token_not_found()
@@ -44,12 +44,12 @@ class VendorTest extends TestCase
         $this->expectException(OptionNotFoundException::class);
         $this->expectExceptionMessage('reporter.form.error.optionNotFound.token');
         $this->expectExceptionCode(400);
-        new Vendor('https://github.com/gearsdigital/kirby-reporter', '');
+        new IssueTracker('https://github.com/gearsdigital/kirby-reporter', '');
     }
 
     public function test_override_owner_with_user()
     {
-        $vendor = new Vendor('https://github.com/gearsdigital/kirby-reporter', 'a3bKJSHp3Er3VuyP6Wc', 'custom-user');
+        $vendor = new IssueTracker('https://github.com/gearsdigital/kirby-reporter', 'a3bKJSHp3Er3VuyP6Wc', 'custom-user');
         $this->assertEquals('custom-user', $vendor->getUser());
         $this->assertEquals('gearsdigital', $vendor->getOwner());
     }

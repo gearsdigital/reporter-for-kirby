@@ -12,17 +12,17 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use KirbyReporter\Model\FormData;
 use KirbyReporter\Report\ReportResponse;
-use KirbyReporter\Vendor\Vendor;
+use KirbyReporter\Vendor\IssueTracker;
 use PHPUnit\Framework\TestCase;
 
 class GitlabReportTest extends TestCase
 {
-    private Vendor $vendor;
+    private IssueTracker $vendor;
     private string $response;
 
     public function setUp(): void
     {
-        $this->vendor = new Vendor('https://gitlab.org/test/test-repo', '1234567890');
+        $this->vendor = new IssueTracker('https://gitlab.org/test/test-repo', '1234567890');
         $this->response = json_encode([
             "iid" => 46,
             "web_url" => "https://gitlab.com/test/test-repo/issues/46",

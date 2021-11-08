@@ -10,5 +10,5 @@ use KirbyReporter\Model\FormData;
  */
 interface ReportInterface
 {
-    public function report(FormData $reportData, string $parsedTemplate): ReportResponse;
+    public function report(FormData $reportData, ?string $templateData): ReportResponse;
 }

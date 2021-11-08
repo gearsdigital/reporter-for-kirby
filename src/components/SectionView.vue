@@ -32,9 +32,6 @@ export default {
 </script>
 
 <style>
-.k-section-name-reporter {
-}
-
 .k-section-name-reporter .k-kit-form {
   margin-top: 0;
   padding: 1.5rem;
