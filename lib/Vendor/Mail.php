@@ -40,10 +40,10 @@ class Mail implements VendorInterface
 
     public function getType(): ?string
     {
-        if (!in_array($this->type, ['html', 'text'])) {
-            return 'html';
+        if (in_array($this->type, ['html', 'text'])) {
+            return $this->type;
         }
 
-        return $this->type;
+        return 'text';
     }
 }
