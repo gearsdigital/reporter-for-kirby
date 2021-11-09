@@ -46,7 +46,7 @@ Kirby::plugin('gearsdigital/reporter-for-kirby', [
     'templates' => [
         'reporter' => __DIR__.'/templates/reporter.php',
         'emails/report.html' => __DIR__.'/templates/emails/report.html.php',
-        'emails/reporttext.text' => __DIR__.'/templates/emails/report.text.php',
+        'emails/report.text' => __DIR__.'/templates/emails/report.text.php',
     ],
     'sections' => [
         'reporter' => [],
