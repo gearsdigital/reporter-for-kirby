@@ -20,7 +20,7 @@ class MailReport implements ReportInterface
     public function report(FormData $reportData, ?string $templateData): ReportResponse
     {
         kirby()->email([
-            'template' => $this->mail->getType() == 'html' ? 'report' : 'reporttext',
+            'template' => $this->mail->getType() == 'html' ? 'report' : 'report.text',
             'from' => $this->mail->getFrom(),
             'to' => $this->mail->getTo(),
             // @todo evaluate computed options to generate the subject dynamically
