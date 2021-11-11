@@ -1,3 +1,10 @@
+## [4.1.1](https://github.com/gearsdigital/reporter-for-kirby/compare/v4.1.0...v4.1.1) (2021-11-11)
+
+
+### Bug Fixes
+
+* remove dev-packages from vendor to decrease package size ([aa735f2](https://github.com/gearsdigital/reporter-for-kirby/commit/aa735f2ea11fb080c184d7e63f3306b48bc57797))
+
 # [4.1.0](https://github.com/gearsdigital/reporter-for-kirby/compare/v4.0.0...v4.1.0) (2021-11-11)
 
 
