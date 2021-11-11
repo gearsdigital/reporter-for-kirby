@@ -4,7 +4,7 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "44f74f3b9d6dacec3353e26303292427",
+  "content-hash": "8eb7f2666db23e3d17d47d15615a0cc6",
   "packages": [
     {
       "name": "getkirby/composer-installer",
@@ -15,16 +15,16 @@
         "reference": "c98ece30bfba45be7ce457e1102d1b169d922f3d"
       },
       "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/getkirby/composer-installer/zipball/c98ece30bfba45be7ce457e1102d1b169d922f3d",
-                "reference": "c98ece30bfba45be7ce457e1102d1b169d922f3d",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0 || ^2.0"
-            },
-            "require-dev": {
-                "composer/composer": "^1.8 || ^2.0"
+        "type": "zip",
+        "url": "https://api.github.com/repos/getkirby/composer-installer/zipball/c98ece30bfba45be7ce457e1102d1b169d922f3d",
+        "reference": "c98ece30bfba45be7ce457e1102d1b169d922f3d",
+        "shasum": ""
+      },
+      "require": {
+        "composer-plugin-api": "^1.0 || ^2.0"
+      },
+      "require-dev": {
+        "composer/composer": "^1.8 || ^2.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -949,16 +949,16 @@
             "description": "The Kirby 3 core",
             "homepage": "https://getkirby.com",
             "keywords": [
-                "cms",
-                "core",
-                "kirby"
+              "cms",
+              "core",
+              "kirby"
             ],
-            "support": {
-                "email": "support@getkirby.com",
-                "forum": "https://forum.getkirby.com",
-                "issues": "https://github.com/getkirby/kirby/issues",
-                "source": "https://github.com/getkirby/kirby"
-            },
+          "support": {
+            "email": "support@getkirby.com",
+            "forum": "https://forum.getkirby.com",
+            "issues": "https://github.com/getkirby/kirby/issues",
+            "source": "https://github.com/getkirby/kirby"
+          },
           "funding": [
             {
               "url": "https://getkirby.com/buy",
@@ -1029,16 +1029,16 @@
         "dist": {
           "type": "zip",
           "url": "https://api.github.com/repos/laminas/laminas-escaper/zipball/891ad70986729e20ed2e86355fcf93c9dc238a5f",
-                "reference": "891ad70986729e20ed2e86355fcf93c9dc238a5f",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.3 || ~8.0.0 || ~8.1.0"
-            },
-            "conflict": {
-                "zendframework/zend-escaper": "*"
-            },
-            "require-dev": {
+          "reference": "891ad70986729e20ed2e86355fcf93c9dc238a5f",
+          "shasum": ""
+        },
+        "require": {
+          "php": "^7.3 || ~8.0.0 || ~8.1.0"
+        },
+        "conflict": {
+          "zendframework/zend-escaper": "*"
+        },
+        "require-dev": {
                 "laminas/laminas-coding-standard": "~2.3.0",
                 "phpunit/phpunit": "^9.3",
                 "psalm/plugin-phpunit": "^0.12.2",
@@ -1177,15 +1177,15 @@
                     "homepage": "https://daringfireball.net/"
                 }
             ],
-            "description": "PHP SmartyPants",
-            "homepage": "https://michelf.ca/projects/php-smartypants/",
-            "keywords": [
-                "dashes",
-                "quotes",
-                "spaces",
-              "typographer",
-              "typography"
-            ],
+          "description": "PHP SmartyPants",
+          "homepage": "https://michelf.ca/projects/php-smartypants/",
+          "keywords": [
+            "dashes",
+            "quotes",
+            "spaces",
+            "typographer",
+            "typography"
+          ],
           "support": {
             "issues": "https://github.com/michelf/php-smartypants/issues",
             "source": "https://github.com/michelf/php-smartypants/tree/1.8.1"
@@ -1275,16 +1275,16 @@
         "dist": {
           "type": "zip",
           "url": "https://api.github.com/repos/mustangostang/spyc/zipball/4627c838b16550b666d15aeae1e5289dd5b77da0",
-                "reference": "4627c838b16550b666d15aeae1e5289dd5b77da0",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.1"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.3.*@dev"
-            },
-            "type": "library",
+          "reference": "4627c838b16550b666d15aeae1e5289dd5b77da0",
+          "shasum": ""
+        },
+        "require": {
+          "php": ">=5.3.1"
+        },
+        "require-dev": {
+          "phpunit/phpunit": "4.3.*@dev"
+        },
+        "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "0.5.x-dev"
