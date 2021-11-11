@@ -20,9 +20,11 @@ jobs:
         with:
           node-version: 16
 
-      - name: Install
+      - name: Install and Build
         run: |
+          rm -rf tests
           npm install
+          npm run build
           composer build
 
       - name: Release
