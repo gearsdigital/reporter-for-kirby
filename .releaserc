@@ -41,7 +41,7 @@
             "@semantic-release/git",
             {
                 "assets": [
-                    "!test"
+                    "!test",
                     "blueprints",
                     "lib",
                     "templates",
@@ -51,7 +51,7 @@
                     "CHANGELOG.md",
                     "index.php",
                     "index.js",
-                    "index.css"
+                    "index.css",
                     ".gitignore"
                 ],
                 "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
