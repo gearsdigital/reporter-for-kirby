@@ -1,5 +1,6 @@
 {
     "name": "gearsdigital/reporter-for-kirby",
+    "version": "4.0.1",
     "description": "Gather feedback directly out of the Panel! Enable your editors or clients to submit tasks, bugs and ideas either straight to your issue tracker or by E-Mail.",
     "type": "kirby-plugin",
     "license": "MIT",
@@ -29,7 +30,8 @@
         "mockery/mockery": "^1.4"
     },
     "scripts": {
-        "test": "phpunit --bootstrap tests/bootstrap.php tests"
+        "test": "phpunit --bootstrap tests/bootstrap.php tests",
+        "build": "composer install --no-dev --no-scripts --optimize-autoloader"
     },
     "extra": {
         "kirby-cms-path": "vendor/getkirby/kirby"

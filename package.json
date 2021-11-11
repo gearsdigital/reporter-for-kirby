@@ -16,9 +16,13 @@
     "babel-runtime": "^6.26.0",
     "cssnano": "^4.1.10",
     "sass": "^1.21.0",
+    "semver": "^7.3.4",
     "vue-template-compiler": "^2.6.10"
   },
   "dependencies": {
+    "@ambimax/semantic-release-composer": "github:ambimax/semantic-release-composer",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
     "vue": "^2.6.10",
     "vue-hot-reload-api": "^2.3.3",
     "vue-slim-tabs": "^0.3.0",
