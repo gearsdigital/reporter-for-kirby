@@ -1,4 +1,4 @@
-name: PHP Composer
+name: TEST
 
 on: [push]
 
@@ -11,6 +11,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           path: 'kirby-reporter'
+          fetch-depth: 0
 
       - name: Install Starterkit
         run: |
@@ -20,7 +21,7 @@ jobs:
       - name: Update Kirby
         run: |
           rm -rf starterkit/kirby
-          composer require getkirby/cms:3.6.0-rc.1@dev
+          composer require getkirby/cms:3.6.0-rc.4@dev
           mv kirby starterkit
           cd starterkit/kirby
           composer install
