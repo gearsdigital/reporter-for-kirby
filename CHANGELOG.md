@@ -1,3 +1,15 @@
+# [4.1.0](https://github.com/gearsdigital/reporter-for-kirby/compare/v4.0.0...v4.1.0) (2021-11-11)
+
+
+### Bug Fixes
+
+* update composer to reflect the latest additions ([09de70e](https://github.com/gearsdigital/reporter-for-kirby/commit/09de70efcd31246c83c76340cc370e811c84b1b4))
+
+
+### Features
+
+* add semantic release to automate the release process ([addb13e](https://github.com/gearsdigital/reporter-for-kirby/commit/addb13efc0a293667cb3b3480fdd4e446ef41e73))
+
 # [4.0.0](https://github.com/gearsdigital/reporter-for-kirby/compare/v3.0.1...v4.0.0) (2021-11-11)
 
 
