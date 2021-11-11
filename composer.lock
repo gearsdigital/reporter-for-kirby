@@ -1,20 +1,20 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-    "content-hash": "f668811a9bcc1ed7d5fd7c3ab05b8b0c",
-    "packages": [
-        {
-            "name": "getkirby/composer-installer",
-            "version": "1.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/getkirby/composer-installer.git",
-                "reference": "c98ece30bfba45be7ce457e1102d1b169d922f3d"
-            },
-            "dist": {
+  "_readme": [
+    "This file locks the dependencies of your project to a known state",
+    "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+    "This file is @generated automatically"
+  ],
+  "content-hash": "44f74f3b9d6dacec3353e26303292427",
+  "packages": [
+    {
+      "name": "getkirby/composer-installer",
+      "version": "1.2.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/getkirby/composer-installer.git",
+        "reference": "c98ece30bfba45be7ce457e1102d1b169d922f3d"
+      },
+      "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/getkirby/composer-installer/zipball/c98ece30bfba45be7ce457e1102d1b169d922f3d",
                 "reference": "c98ece30bfba45be7ce457e1102d1b169d922f3d",
@@ -959,25 +959,76 @@
                 "issues": "https://github.com/getkirby/kirby/issues",
                 "source": "https://github.com/getkirby/kirby"
             },
-            "funding": [
-                {
-                    "url": "https://getkirby.com/buy",
-                    "type": "custom"
-                }
-            ],
-            "time": "2021-11-05T14:42:21+00:00"
+          "funding": [
+            {
+              "url": "https://getkirby.com/buy",
+              "type": "custom"
+            }
+          ],
+          "time": "2021-11-05T14:42:21+00:00"
         },
-        {
-            "name": "laminas/laminas-escaper",
-            "version": "2.9.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laminas/laminas-escaper.git",
-                "reference": "891ad70986729e20ed2e86355fcf93c9dc238a5f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-escaper/zipball/891ad70986729e20ed2e86355fcf93c9dc238a5f",
+      {
+        "name": "hamcrest/hamcrest-php",
+        "version": "v2.0.1",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/hamcrest/hamcrest-php.git",
+          "reference": "8c3d0a3f6af734494ad8f6fbbee0ba92422859f3"
+        },
+        "dist": {
+          "type": "zip",
+          "url": "https://api.github.com/repos/hamcrest/hamcrest-php/zipball/8c3d0a3f6af734494ad8f6fbbee0ba92422859f3",
+          "reference": "8c3d0a3f6af734494ad8f6fbbee0ba92422859f3",
+          "shasum": ""
+        },
+        "require": {
+          "php": "^5.3|^7.0|^8.0"
+        },
+        "replace": {
+          "cordoval/hamcrest-php": "*",
+          "davedevelopment/hamcrest-php": "*",
+          "kodova/hamcrest-php": "*"
+        },
+        "require-dev": {
+          "phpunit/php-file-iterator": "^1.4 || ^2.0",
+          "phpunit/phpunit": "^4.8.36 || ^5.7 || ^6.5 || ^7.0"
+        },
+        "type": "library",
+        "extra": {
+          "branch-alias": {
+            "dev-master": "2.1-dev"
+          }
+        },
+        "autoload": {
+          "classmap": [
+            "hamcrest"
+          ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+          "BSD-3-Clause"
+        ],
+        "description": "This is the PHP port of Hamcrest Matchers",
+        "keywords": [
+          "test"
+        ],
+        "support": {
+          "issues": "https://github.com/hamcrest/hamcrest-php/issues",
+          "source": "https://github.com/hamcrest/hamcrest-php/tree/v2.0.1"
+        },
+        "time": "2020-07-09T08:09:16+00:00"
+      },
+      {
+        "name": "laminas/laminas-escaper",
+        "version": "2.9.0",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/laminas/laminas-escaper.git",
+          "reference": "891ad70986729e20ed2e86355fcf93c9dc238a5f"
+        },
+        "dist": {
+          "type": "zip",
+          "url": "https://api.github.com/repos/laminas/laminas-escaper/zipball/891ad70986729e20ed2e86355fcf93c9dc238a5f",
                 "reference": "891ad70986729e20ed2e86355fcf93c9dc238a5f",
                 "shasum": ""
             },
@@ -1132,26 +1183,98 @@
                 "dashes",
                 "quotes",
                 "spaces",
-                "typographer",
-                "typography"
+              "typographer",
+              "typography"
             ],
-            "support": {
-                "issues": "https://github.com/michelf/php-smartypants/issues",
-                "source": "https://github.com/michelf/php-smartypants/tree/1.8.1"
-            },
-            "time": "2016-12-13T01:01:17+00:00"
+          "support": {
+            "issues": "https://github.com/michelf/php-smartypants/issues",
+            "source": "https://github.com/michelf/php-smartypants/tree/1.8.1"
+          },
+          "time": "2016-12-13T01:01:17+00:00"
         },
-        {
-            "name": "mustangostang/spyc",
-            "version": "0.6.3",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:mustangostang/spyc.git",
-                "reference": "4627c838b16550b666d15aeae1e5289dd5b77da0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mustangostang/spyc/zipball/4627c838b16550b666d15aeae1e5289dd5b77da0",
+      {
+        "name": "mockery/mockery",
+        "version": "1.4.4",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/mockery/mockery.git",
+          "reference": "e01123a0e847d52d186c5eb4b9bf58b0c6d00346"
+        },
+        "dist": {
+          "type": "zip",
+          "url": "https://api.github.com/repos/mockery/mockery/zipball/e01123a0e847d52d186c5eb4b9bf58b0c6d00346",
+          "reference": "e01123a0e847d52d186c5eb4b9bf58b0c6d00346",
+          "shasum": ""
+        },
+        "require": {
+          "hamcrest/hamcrest-php": "^2.0.1",
+          "lib-pcre": ">=7.0",
+          "php": "^7.3 || ^8.0"
+        },
+        "conflict": {
+          "phpunit/phpunit": "<8.0"
+        },
+        "require-dev": {
+          "phpunit/phpunit": "^8.5 || ^9.3"
+        },
+        "type": "library",
+        "extra": {
+          "branch-alias": {
+            "dev-master": "1.4.x-dev"
+          }
+        },
+        "autoload": {
+          "psr-0": {
+            "Mockery": "library/"
+          }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+          "BSD-3-Clause"
+        ],
+        "authors": [
+          {
+            "name": "Pádraic Brady",
+            "email": "padraic.brady@gmail.com",
+            "homepage": "http://blog.astrumfutura.com"
+          },
+          {
+            "name": "Dave Marshall",
+            "email": "dave.marshall@atstsolutions.co.uk",
+            "homepage": "http://davedevelopment.co.uk"
+          }
+        ],
+        "description": "Mockery is a simple yet flexible PHP mock object framework",
+        "homepage": "https://github.com/mockery/mockery",
+        "keywords": [
+          "BDD",
+          "TDD",
+          "library",
+          "mock",
+          "mock objects",
+          "mockery",
+          "stub",
+          "test",
+          "test double",
+          "testing"
+        ],
+        "support": {
+          "issues": "https://github.com/mockery/mockery/issues",
+          "source": "https://github.com/mockery/mockery/tree/1.4.4"
+        },
+        "time": "2021-09-13T15:28:59+00:00"
+      },
+      {
+        "name": "mustangostang/spyc",
+        "version": "0.6.3",
+        "source": {
+          "type": "git",
+          "url": "git@github.com:mustangostang/spyc.git",
+          "reference": "4627c838b16550b666d15aeae1e5289dd5b77da0"
+        },
+        "dist": {
+          "type": "zip",
+          "url": "https://api.github.com/repos/mustangostang/spyc/zipball/4627c838b16550b666d15aeae1e5289dd5b77da0",
                 "reference": "4627c838b16550b666d15aeae1e5289dd5b77da0",
                 "shasum": ""
             },
