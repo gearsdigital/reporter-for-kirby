@@ -53,6 +53,6 @@ class ReportClient
 
         // we need to parse the reporer template first because we need to send a plain 'string'
         // to external APIs
-        return $this->client->report($formData, $this->parseTemplate($formData->getFormFields()));
+        return $this->client->report($formData, $this->parseTemplate($formData));
     }
 }

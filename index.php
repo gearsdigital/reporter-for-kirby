@@ -5,6 +5,7 @@ use Kirby\Cms\Blueprint;
 use Kirby\Cms\Response;
 use KirbyReporter\Model\FormData;
 use KirbyReporter\Report\ReportClient;
+use KirbyReporter\Report\ReportMailTemplateParser;
 use KirbyReporter\Report\ReportTemplateParser;
 use KirbyReporter\Vendor\IssueTracker;
 use KirbyReporter\Vendor\Mail;
@@ -96,10 +97,16 @@ Kirby::plugin('gearsdigital/reporter-for-kirby', [
                 'action' => function () {
                     $requestData = kirby()->request()->body()->data();
                     $formData = new FormData($requestData);
-                    if (isset($formData->getFormFields()['description'])) {
+                    if (is_array(option('gearsdigital.reporter-for-kirby.repository'))) {
                         $parsedTemplate = (new class {
                             use ReportTemplateParser;
-                        })->parseTemplate($formData->getFormFields());
+                        })->parseTemplate($formData);
+
+                        return new Response(json_encode(trim($parsedTemplate)), 'application/json');
+                    } elseif ($type = option('gearsdigital.reporter-for-kirby.mail.type')) {
+                        $parsedTemplate = (new class {
+                            use ReportMailTemplateParser;
+                        })->parseTemplate($formData, $type ?? 'text');
 
                         return new Response(json_encode(trim($parsedTemplate)), 'application/json');
                     }

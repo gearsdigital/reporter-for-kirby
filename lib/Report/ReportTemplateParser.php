@@ -3,14 +3,15 @@
 namespace KirbyReporter\Report;
 
 use Kirby\Toolkit\Tpl;
+use KirbyReporter\Model\FormData;
 
 trait ReportTemplateParser
 {
     private string $pluginName = 'gearsdigital/reporter-for-kirby';
 
-    public function parseTemplate(array $templateData): string
+    public function parseTemplate(FormData $formData): string
     {
-        return Tpl::load($this->getReportTemplate(), ['fields' => $templateData]);
+        return Tpl::load($this->getReportTemplate(), ['title' => $formData->getTitle(), 'fields' => $formData->getFormFields()]);
     }
 
     private function getReportTemplate(): string

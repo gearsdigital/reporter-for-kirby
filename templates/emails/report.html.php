@@ -1,7 +1,7 @@
 Issue Report from "<?= site()->title() ?? ''; ?>" by <?= kirby()->user()->nameOrEmail() ?? ''; ?>
 
 ---
-<?= $title ?? ''; ?>
+<b><?= $title ?? ''; ?></b>
 
 ---
 <?= $fields['description'] ?? ''; ?>
