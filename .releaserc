@@ -40,20 +40,7 @@
         [
             "@semantic-release/git",
             {
-                "assets": [
-                    "!test",
-                    "blueprints",
-                    "lib",
-                    "templates",
-                    "vendor",
-                    "composer.json",
-                    "package.json",
-                    "CHANGELOG.md",
-                    "index.php",
-                    "index.js",
-                    "index.css",
-                    ".gitignore"
-                ],
+                "assets": ['CHANGELOG.md', 'package.json', 'package-lock.json', 'composer.json', 'composer.lock']
                 "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
             }
         ]
