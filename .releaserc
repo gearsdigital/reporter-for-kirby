@@ -41,9 +41,9 @@
             "@semantic-release/git",
             {
                 "assets": [
+                    "!test"
                     "blueprints",
                     "lib",
-                    "src",
                     "templates",
                     "vendor",
                     "composer.json",

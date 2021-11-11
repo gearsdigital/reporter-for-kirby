@@ -1,4 +1,7 @@
 {
+  "name": "reporter-for-kirby",
+  "version": "4.0.0",
+  "private": true,
   "scripts": {
     "dev": "npx -y kirbyup src/index.js --watch",
     "build": "npx -y kirbyup src/index.js",

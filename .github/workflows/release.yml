@@ -22,6 +22,7 @@ jobs:
 
       - name: Install
         run: |
+          rm -rf tests
           npm install
           composer build
 
